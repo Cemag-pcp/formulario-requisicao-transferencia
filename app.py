@@ -5,6 +5,7 @@ from flask_restful import Resource, Api
 from cachetools import Cache
 import cachetools
 
+
 DB_HOST = "database-2.cdcogkfzajf0.us-east-1.rds.amazonaws.com"
 DB_NAME = "postgres"
 DB_USER = "postgres"
