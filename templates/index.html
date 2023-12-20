@@ -416,7 +416,17 @@
             document.getElementById('loader').style.display = 'block';
             document.getElementById('loader-overlay').style.display = 'block';
 
-            var selectFuncionario = $('#selectFuncionario').select2('data')[0].text;
+            try {
+                var selectFuncionario = $('#selectFuncionario').select2('data')[0].text;
+                // Se não houver exceção, o código continua aqui
+            } catch (error) {
+                // Se ocorrer uma exceção, o código dentro deste bloco será executado
+                exibirMensagem('aviso','Por favor, preencha todos os campos')
+                document.getElementById('loader').style.display = 'none';
+                document.getElementById('loader-overlay').style.display = 'none';
+                return;
+            }          
+            
             var selectItem = $('#selectItem').val();
             var selectCcusto = $('#selectCcusto').val();
             var selectClasse = $('#selectClasse').val();
@@ -470,9 +480,11 @@
 
         // Adiciona um ouvinte para o evento de clique no botão
         $('#btn-salvar-requisicao').on('click', function () {
+            // Desativa o botão após o clique            
             // Chama a função para enviar os dados ao backend
             salvarRequisicao();
         });
+
     </script>
 
     <!-- FORMULÁRIO PARA TRANSFERÊNCIA -->
@@ -538,8 +550,17 @@
             // Substitua 'URL_BACKEND' pela URL real do seu servidor
             var urlBackend = '/salvar-transferencia';
 
-            // Obtém os valores dos campos
-            var selectFuncionarioTransferencia = $('#selectFuncionarioTransferencia').select2('data')[0].text;
+            try {
+                var selectFuncionarioTransferencia = $('#selectFuncionarioTransferencia').select2('data')[0].text;
+                // Se não houver exceção, o código continua aqui
+            } catch (error) {
+                // Se ocorrer uma exceção, o código dentro deste bloco será executado
+                exibirMensagem('aviso','Por favor, preencha todos os campos')
+                document.getElementById('loader').style.display = 'none';
+                document.getElementById('loader-overlay').style.display = 'none';
+                return;
+            }  
+
             var selectItemTransferencia = $('#selectItemTransferencia').val();
             var selectDepositoDestino = $('#selectDepositoDestino').val();
             var quantidade_transferencia = $('#quantidade_transferencia').val();
