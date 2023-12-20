@@ -82,7 +82,10 @@
                 Item
             
                 <select id="selectItem" class="selectItem" name="selectItem" required>
-
+                    <option value="" selected disabled hidden></option> 
+                    {% for item in itens %}
+                        <option value="{{item[0]}}">{{item[0]}}</option>
+                    {% endfor %}
                 </select>
             </label>
 
@@ -270,6 +273,20 @@
     </script>
 
     <script>
+                
+        $(document).ready(function() {
+            $('#selectItem').select2({
+                theme: "classic"
+            });
+        });
+
+        $('#selectItem').on('select2:open', function (e) {
+            $('.select2-search__field').attr('placeholder', 'Digite aqui para buscar...');
+        });
+
+    </script>
+
+    <!-- <script>
         document.addEventListener('DOMContentLoaded', function () {
             // Adiciona um ouvinte de evento ao selectCcusto
             $('#selectCcusto').on('select2:select', function (e) {
@@ -317,7 +334,7 @@
             });
         });
 
-    </script>    
+    </script>     -->
 
     <script>
         document.addEventListener('DOMContentLoaded', function () {
@@ -457,7 +474,6 @@
             salvarRequisicao();
         });
     </script>
-
 
     <!-- FORMULÁRIO PARA TRANSFERÊNCIA -->
 
