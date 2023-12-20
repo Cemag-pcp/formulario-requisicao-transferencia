@@ -163,7 +163,7 @@ def registros_requisicoes():
                             password=DB_PASS, host=DB_HOST)
         cur = conn.cursor(cursor_factory=psycopg2.extras.DictCursor)
 
-        cur.execute("SELECT * FROM requisicao.requisicoes;")
+        cur.execute("SELECT * FROM requisicao.requisicoes ORDER BY id;")
         requisicoes = cur.fetchall()
 
         cur.close()
@@ -182,7 +182,7 @@ def registros_transferencias():
                             password=DB_PASS, host=DB_HOST)
         cur = conn.cursor(cursor_factory=psycopg2.extras.DictCursor)
 
-        cur.execute("SELECT * FROM transferencia.transferencias;")
+        cur.execute("SELECT * FROM transferencia.transferencias ORDER BY id;")
         transferencia = cur.fetchall()
 
         cur.close()
