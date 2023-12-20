@@ -29,111 +29,108 @@
         
         <h2>Fomulário para requisição</h2>
 
-        <form>
+        
             
-            <!-- <div class="form-item-username">
-            
-                <select style="width: 150px;" id="selectFuncionario" class="selectFuncionario" name="selectFuncionario" required>
-                    <option value="" selected disabled hidden>Matrícula</option> 
+        <!-- <div class="form-item-username">
+        
+            <select style="width: 150px;" id="selectFuncionario" class="selectFuncionario" name="selectFuncionario" required>
+                <option value="" selected disabled hidden>Matrícula</option> 
+
+            </select>
+        
+        </div> -->
+        
+        <div class="form-item">
+
+            <label for="label" style="color: white;">
+                Nome ou Matrícula
+
+                <!-- <select style="width: 300px;" id="selectFuncionario" class="selectFuncionario" name="selectFuncionario" required>
+                    <option value="" selected disabled hidden></option> 
+                    {% for matricula in matriculas %}
+                        <option value="{{matricula[0]}}">{{matricula[0]}}</option>
+                    {% endfor %}
+                </select> -->
+
+                <select style="width: 300px;" id="selectFuncionario" class="selectFuncionario" name="selectFuncionario" required>
 
                 </select>
+                
+            </label>
+
+        </div>
+
+        <div class="form-item">
             
-            </div> -->
+            <label for="label" style="color: white;">
+                Centro de custo
+
+                <select id="selectCcusto" class="selectCcusto" name="selectCcusto" required>
+                    <option value="" selected disabled hidden></option> 
+                    {% for ccusto in ccustos %}
+                        <option value="{{ccusto[0]}}">{{ccusto[0]}}</option>
+                    {% endfor %}
+                </select>
             
-            <div class="form-item">
+            </label>
 
-                <label for="label" style="color: white;">
-                    Nome ou Matrícula
+        </div>
 
-                    <!-- <select style="width: 300px;" id="selectFuncionario" class="selectFuncionario" name="selectFuncionario" required>
-                        <option value="" selected disabled hidden></option> 
-                        {% for matricula in matriculas %}
-                            <option value="{{matricula[0]}}">{{matricula[0]}}</option>
-                        {% endfor %}
-                    </select> -->
+        <div class="form-item">
 
-                    <select style="width: 300px;" id="selectFuncionario" class="selectFuncionario" name="selectFuncionario" required>
+            <label for="label" style="color: white;">
+                Item
+            
+                <select id="selectItem" class="selectItem" name="selectItem" required>
 
-                    </select>
-                    
-                </label>
+                </select>
+            </label>
 
-            </div>
+        </div>
 
-            <div class="form-item">
+        <div class="form-item">
+
+            <label for="label" style="color: white;">
+                Classe da requisição
+            
+                <select id="selectClasse" class="selectClasse" name="selectClasse" required>
+
+                </select>
+            </label>
+
+        </div>
+
+        <div class="form-item">
+
+            <label style="margin-right: 30px; color: white;" for="title" style="color: white;">
                 
-                <label for="label" style="color: white;">
-                    Centro de custo
+                <!-- <input type="number" name="quantidade" id="quantidade" min="0.1" max="999999" required>  -->
+                <label  style="margin-right: 30px; color: white;" for="title">Observação (opcional): </label>
+                <textarea id="texto_observacao" rows="5" cols="35" id="title" name="title"></textarea>
 
-                    <select id="selectCcusto" class="selectCcusto" name="selectCcusto" required>
-                        <option value="" selected disabled hidden></option> 
-                        {% for ccusto in ccustos %}
-                            <option value="{{ccusto[0]}}">{{ccusto[0]}}</option>
-                        {% endfor %}
-                    </select>
-                
-                </label>
+            </label>
 
-            </div>
+        </div>
 
-            <div class="form-item">
+        <div class="form-item">
 
-                <label for="label" style="color: white;">
-                    Item
-                
-                    <select id="selectItem" class="selectItem" name="selectItem" required>
+            <label style="margin-right: 30px; color: white;" for="label" style="color: white;">
+                Quantidade
+                <!-- <input type="number" name="quantidade" id="quantidade" min="0.1" max="999999" required>  -->
+                <input type="number" id="quantidade" name="quantidade" required><br><br>
 
-                    </select>
-                </label>
+            </label>
 
-            </div>
+        </div>
 
-            <div class="form-item">
+        <!-- <div class="accept-box">
+            <input type="checkbox" name="accept" id="accept">
+            <p>I accept the <a href="#">Terms & Conditions</a></p>
+        </div> -->
 
-                <label for="label" style="color: white;">
-                    Classe da requisição
-                
-                    <select id="selectClasse" class="selectClasse" name="selectClasse" required>
-
-                    </select>
-                </label>
-
-            </div>
-
-            <div class="form-item">
-
-                <label style="margin-right: 30px; color: white;" for="title" style="color: white;">
-                    
-                    <!-- <input type="number" name="quantidade" id="quantidade" min="0.1" max="999999" required>  -->
-                    <label  style="margin-right: 30px; color: white;" for="title">Observação: </label>
-                    <textarea id="texto_observacao" rows="5" cols="35" id="title" name="title"></textarea>
-
-                </label>
-
-            </div>
-
-            <div class="form-item">
-
-                <label style="margin-right: 30px; color: white;" for="label" style="color: white;">
-                    Quantidade
-                    <!-- <input type="number" name="quantidade" id="quantidade" min="0.1" max="999999" required>  -->
-                    <input type="number" id="quantidade" name="quantidade" min="0" required><br><br>
-
-                </label>
-
-            </div>
-
-            <!-- <div class="accept-box">
-                <input type="checkbox" name="accept" id="accept">
-                <p>I accept the <a href="#">Terms & Conditions</a></p>
-            </div> -->
-
-            <div class="form-btns">
-                <button class="signup" id="btn-salvar-requisicao">Confirmar</button>
-            </div>
-
-        </form>
-        <!-- <p>CEMAG &copy; yourwebsite.com</p> -->
+        <div class="form-btns">
+            <button class="signup" id="btn-salvar-requisicao">Confirmar</button>
+        </div>
  
     </div>
 
@@ -145,91 +142,88 @@
         </div>
 
         <h2>Fomulário para transferência</h2>
+            
+        <!-- <div class="form-item-username">
+        
+            <select style="width: 150px;" id="selectFuncionario" class="selectFuncionario" name="selectFuncionario" required>
+                <option value="" selected disabled hidden>Matrícula</option> 
+                {% for matricula in matriculas %}
+                    <option value="{{matricula}}">{{matricula}}</option>
+                {% endfor %}
+            </select>
+        
+        </div> -->
+        
+        <div class="form-item">
 
-        <form>
+            <label for="label" style="color: white;">
+                Nome ou Matrícula
+                
+                <select style="width: 300px;" id="selectFuncionarioTransferencia" class="selectFuncionarioTransferencia" name="selectFuncionarioTransferencia" required>
+
+                </select>
+                
+            </label>
+
+        </div>
+
+        <div class="form-item">
             
-            <!-- <div class="form-item-username">
-            
-                <select style="width: 150px;" id="selectFuncionario" class="selectFuncionario" name="selectFuncionario" required>
-                    <option value="" selected disabled hidden>Matrícula</option> 
-                    {% for matricula in matriculas %}
-                        <option value="{{matricula}}">{{matricula}}</option>
-                    {% endfor %}
+            <label for="label" style="color: white;">
+                Depósito destino
+
+                <select id="selectDepositoDestino" class="selectDepositoDestino" name="selectDepositoDestino" required>
+                        <option value="" selected disabled hidden></option> 
+                        {% for deposito in deposito_destino %}
+                            <option value="{{deposito[0]}}">{{deposito[0]}}</option>
+                        {% endfor %}
                 </select>
             
-            </div> -->
+            </label>
+
+        </div>
+
+        <div class="form-item">
+
+            <label for="label" style="color: white;">
+                Item
             
-            <div class="form-item">
+                <select id="selectItemTransferencia" class="selectItemTransferencia" name="selectItemTransferencia" required>
+                    <option value="" selected disabled hidden></option> 
+                    {% for recurso in recursos_transferencia %}
+                        <option value="{{recurso[0]}}">{{recurso[0]}}</option>
+                    {% endfor %}
+                </select>
+            </label>
 
-                <label for="label" style="color: white;">
-                    Nome ou Matrícula
-                    
-                    <select style="width: 300px;" id="selectFuncionarioTransferencia" class="selectFuncionarioTransferencia" name="selectFuncionarioTransferencia" required>
+        </div>
 
-                    </select>
-                    
-                </label>
+        <div class="form-item">
 
-            </div>
+            <label style="margin-right: 30px; color: white;" for="label" style="color: white;">
+                Quantidade
+                <!-- <input type="number" name="quantidade" id="quantidade" min="0.1" max="999999" required>  -->
+                <input type="number" id="quantidade_transferencia" name="quantidade_transferencia" min="0" required><br><br>
 
-            <div class="form-item">
-                
-                <label for="label" style="color: white;">
-                    Depósito destino
+            </label>
 
-                    <select id="selectDepositoDestino" class="selectDepositoDestino" name="selectDepositoDestino" required>
-                            <option value="" selected disabled hidden></option> 
-                            {% for deposito in deposito_destino %}
-                                <option value="{{deposito[0]}}">{{deposito[0]}}</option>
-                            {% endfor %}
-                    </select>
-                
-                </label>
+        </div>
 
-            </div>
+        <!-- <div class="accept-box">
+            <input type="checkbox" name="accept" id="accept">
+            <p>I accept the <a href="#">Terms & Conditions</a></p>
+        </div> -->
 
-            <div class="form-item">
-
-                <label for="label" style="color: white;">
-                    Item
-                
-                    <select id="selectItemTransferencia" class="selectItemTransferencia" name="selectItemTransferencia" required>
-                        <option value="" selected disabled hidden></option> 
-                        {% for recurso in recursos_transferencia %}
-                            <option value="{{recurso[0]}}">{{recurso[0]}}</option>
-                        {% endfor %}
-                    </select>
-                </label>
-
-            </div>
-
-            <div class="form-item">
-
-                <label style="margin-right: 30px; color: white;" for="label" style="color: white;">
-                    Quantidade
-                    <!-- <input type="number" name="quantidade" id="quantidade" min="0.1" max="999999" required>  -->
-                    <input type="number" id="quantidade_transferencia" name="quantidade_transferencia" min="0" required><br><br>
-
-                </label>
-
-            </div>
-
-            <!-- <div class="accept-box">
-                <input type="checkbox" name="accept" id="accept">
-                <p>I accept the <a href="#">Terms & Conditions</a></p>
-            </div> -->
-
-            <div class="form-btns">
-                <button class="signup" id="btn-salvar-transferencia">Confirmar</button>
-            </div>
-
-        </form>
-        <!-- <p>CEMAG &copy; yourwebsite.com</p> -->
+        <div class="form-btns">
+            <button class="signup" id="btn-salvar-transferencia">Confirmar</button>
+        </div>
  
     </div>
     
     <div id="loader" style="display: none;"></div>
     <div id="loader-overlay"></div>
+
+    <div id="mensagem"></div>
 
     <!-- FORMULÁRIO PARA REQUISIÇÃO -->
 
@@ -400,19 +394,26 @@
     <script>
         // Função para enviar os dados ao backend
         function salvarRequisicao() {
-            // Substitua 'URL_BACKEND' pela URL real do seu servidor
-            var urlBackend = '/salvar-requisicao';
-
             // Obtém os valores dos campos
+            // Exibe o loader
+            document.getElementById('loader').style.display = 'block';
+            document.getElementById('loader-overlay').style.display = 'block';
+
             var selectFuncionario = $('#selectFuncionario').select2('data')[0].text;
-
-            console.log(selectFuncionario);
-
             var selectItem = $('#selectItem').val();
             var selectCcusto = $('#selectCcusto').val();
             var selectClasse = $('#selectClasse').val();
             var quantidade = $('#quantidade').val();
             var observacao = $('#texto_observacao').val();
+
+            // Verifica se algum campo está vazio
+            if (!selectFuncionario || !selectItem || !selectCcusto || !selectClasse || !quantidade) {
+                exibirMensagem('aviso', 'Por favor, preencha todos os campos');
+                return;  // Não faz a requisição se algum campo estiver vazio
+            }
+
+            // Substitua 'URL_BACKEND' pela URL real do seu servidor
+            var urlBackend = '/salvar-requisicao';
 
             // Monta o objeto de dados
             var dados = {
@@ -430,11 +431,21 @@
                 url: urlBackend,
                 data: dados,
                 success: function (data) {
-                    console.log('Dados enviados com sucesso:', data);
+                    exibirMensagem('sucesso', 'Dados enviados com sucesso');
                     // Adapte conforme necessário
+                    $('#selectItem').val(null).trigger('change');
+                    $('#selectClasse').val(null).trigger('change');
+                    $('#quantidade').val('');
+                    $('#texto_observacao').val('');
+                    
+                    document.getElementById('loader').style.display = 'none';
+                    document.getElementById('loader-overlay').style.display = 'none';
                 },
                 error: function (error) {
                     console.error('Erro ao enviar os dados:', error);
+                    document.getElementById('loader').style.display = 'none';
+                    document.getElementById('loader-overlay').style.display = 'none';
+
                     // Adapte conforme necessário
                 }
             });
@@ -446,6 +457,7 @@
             salvarRequisicao();
         });
     </script>
+
 
     <!-- FORMULÁRIO PARA TRANSFERÊNCIA -->
 
@@ -503,6 +515,10 @@
     <script>
         // Função para enviar os dados ao backend
         function salvarTransferencia() {
+            
+            document.getElementById('loader').style.display = 'block';
+            document.getElementById('loader-overlay').style.display = 'block';
+
             // Substitua 'URL_BACKEND' pela URL real do seu servidor
             var urlBackend = '/salvar-transferencia';
 
@@ -511,6 +527,12 @@
             var selectItemTransferencia = $('#selectItemTransferencia').val();
             var selectDepositoDestino = $('#selectDepositoDestino').val();
             var quantidade_transferencia = $('#quantidade_transferencia').val();
+
+            // Verifica se algum campo está vazio
+            if (!selectFuncionarioTransferencia || !selectItemTransferencia || !selectDepositoDestino || !quantidade_transferencia) {
+                exibirMensagem('aviso', 'Por favor, preencha todos os campos');
+                return;  // Não faz a requisição se algum campo estiver vazio
+            }
 
             // Monta o objeto de dados
             var dados = {
@@ -526,15 +548,21 @@
                 url: urlBackend,
                 data: dados,
                 success: function (data) {
-                    console.log('Dados enviados com sucesso:', data);
+                    exibirMensagem('sucesso', 'Dados enviados com sucesso');
                     // Adapte conforme necessário
 
                     // Limpa ou reseta os campos específicos
-                    $('#selectFuncionarioTransferencia').val(selectFuncionarioTransferencia);
+                    $('#selectItemTransferencia').val(null).trigger('change');
+                    $('#quantidade_transferencia').val('');
+
+                    document.getElementById('loader').style.display = 'none';
+                    document.getElementById('loader-overlay').style.display = 'none';
                 },
                 error: function (error) {
                     console.error('Erro ao enviar os dados:', error);
                     // Adapte conforme necessário
+                    document.getElementById('loader').style.display = 'none';
+                    document.getElementById('loader-overlay').style.display = 'none';
                 }
             });
         }
@@ -563,6 +591,31 @@
 
         // Por padrão, mostrar o formulário de requisição
         mostrarFormulario('formulario_requisicao');
+    </script>
+
+    <!-- MENSAGEM -->
+
+    <script>
+        function exibirMensagem(tipo, texto) {
+            var mensagemElement = document.getElementById('mensagem');
+        
+            // Define o texto da mensagem
+            mensagemElement.innerText = texto;
+        
+            // Define a classe de estilo com base no tipo
+            mensagemElement.className = 'sucesso';
+            if (tipo === 'aviso') {
+            mensagemElement.className = 'aviso';
+            }
+        
+            // Exibe a mensagem
+            mensagemElement.style.top = '20px'; // Define a posição para exibir a mensagem
+        
+            // Aguarda 3 segundos e esconde a mensagem
+            setTimeout(function () {
+            mensagemElement.style.top = '-204px'; // Define a posição para esconder a mensagem
+            }, 3000); // 3000 milissegundos = 3 segundos
+        }
     </script>
 
 </body>
