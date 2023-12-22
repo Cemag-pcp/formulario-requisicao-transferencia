@@ -43,7 +43,7 @@
         <div class="form-item">
 
             <label for="label" style="color: white;">
-                Nome ou Matrícula
+                Nome ou Matrícula (obrigatório):
 
                 <!-- <select style="width: 300px;" id="selectFuncionario" class="selectFuncionario" name="selectFuncionario" required>
                     <option value="" selected disabled hidden></option> 
@@ -63,7 +63,7 @@
         <div class="form-item">
             
             <label for="label" style="color: white;">
-                Centro de custo
+                Centro de custo (obrigatório):
 
                 <select id="selectCcusto" class="selectCcusto" name="selectCcusto" required>
                     <option value="" selected disabled hidden></option> 
@@ -79,7 +79,7 @@
         <div class="form-item">
 
             <label for="label" style="color: white;">
-                Item
+                Item (obrigatório):
             
                 <select id="selectItem" class="selectItem" name="selectItem" required>
                     <option value="" selected disabled hidden></option> 
@@ -94,7 +94,7 @@
         <div class="form-item">
 
             <label for="label" style="color: white;">
-                Classe da requisição
+                Classe da requisição (obrigatório):
             
                 <select id="selectClasse" class="selectClasse" name="selectClasse" required>
 
@@ -118,7 +118,7 @@
         <div class="form-item">
 
             <label style="margin-right: 30px; color: white;" for="label" style="color: white;">
-                Quantidade
+                Quantidade (obrigatório):
                 <!-- <input type="number" name="quantidade" id="quantidade" min="0.1" max="999999" required>  -->
                 <input type="number" id="quantidade" name="quantidade" required><br><br>
 
@@ -160,7 +160,7 @@
         <div class="form-item">
 
             <label for="label" style="color: white;">
-                Nome ou Matrícula
+                Nome ou Matrícula (obrigatório):
                 
                 <select style="width: 300px;" id="selectFuncionarioTransferencia" class="selectFuncionarioTransferencia" name="selectFuncionarioTransferencia" required>
 
@@ -173,7 +173,7 @@
         <div class="form-item">
             
             <label for="label" style="color: white;">
-                Depósito destino
+                Depósito destino (obrigatório):
 
                 <select id="selectDepositoDestino" class="selectDepositoDestino" name="selectDepositoDestino" required>
                         <option value="" selected disabled hidden></option> 
@@ -189,7 +189,7 @@
         <div class="form-item">
 
             <label for="label" style="color: white;">
-                Item
+                Item (obrigatório):
             
                 <select id="selectItemTransferencia" class="selectItemTransferencia" name="selectItemTransferencia" required>
                     <option value="" selected disabled hidden></option> 
@@ -204,7 +204,7 @@
         <div class="form-item">
 
             <label style="margin-right: 30px; color: white;" for="label" style="color: white;">
-                Quantidade
+                Quantidade (obrigatório):
                 <!-- <input type="number" name="quantidade" id="quantidade" min="0.1" max="999999" required>  -->
                 <input type="number" id="quantidade_transferencia" name="quantidade_transferencia" min="0" required><br><br>
 
@@ -421,7 +421,7 @@
                 // Se não houver exceção, o código continua aqui
             } catch (error) {
                 // Se ocorrer uma exceção, o código dentro deste bloco será executado
-                exibirMensagem('aviso','Por favor, preencha todos os campos')
+                exibirMensagem('aviso','Por favor, preencha todos os campos obrigatórios')
                 document.getElementById('loader').style.display = 'none';
                 document.getElementById('loader-overlay').style.display = 'none';
                 return;
@@ -435,7 +435,10 @@
 
             // Verifica se algum campo está vazio
             if (!selectFuncionario || !selectItem || !selectCcusto || !selectClasse || !quantidade) {
-                exibirMensagem('aviso', 'Por favor, preencha todos os campos');
+                exibirMensagem('aviso', 'Por favor, preencha todos os campos obrigatórios');
+
+                document.getElementById('loader').style.display = 'none';
+                document.getElementById('loader-overlay').style.display = 'none';
                 return;  // Não faz a requisição se algum campo estiver vazio
             }
 
@@ -555,7 +558,7 @@
                 // Se não houver exceção, o código continua aqui
             } catch (error) {
                 // Se ocorrer uma exceção, o código dentro deste bloco será executado
-                exibirMensagem('aviso','Por favor, preencha todos os campos')
+                exibirMensagem('aviso','Por favor, preencha todos os campos obrigatórios')
                 document.getElementById('loader').style.display = 'none';
                 document.getElementById('loader-overlay').style.display = 'none';
                 return;
@@ -567,7 +570,9 @@
 
             // Verifica se algum campo está vazio
             if (!selectFuncionarioTransferencia || !selectItemTransferencia || !selectDepositoDestino || !quantidade_transferencia) {
-                exibirMensagem('aviso', 'Por favor, preencha todos os campos');
+                exibirMensagem('aviso', 'Por favor, preencha todos os campos obrigatórios');
+                document.getElementById('loader').style.display = 'none';
+                document.getElementById('loader-overlay').style.display = 'none';
                 return;  // Não faz a requisição se algum campo estiver vazio
             }
 
