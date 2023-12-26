@@ -15,7 +15,6 @@
     <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/js/select2.min.js"></script>
     
-
 </head>
 
 <body>
@@ -84,9 +83,14 @@
                 <select id="selectItem" class="selectItem" name="selectItem" required>
                     <option value="" selected disabled hidden></option> 
                     {% for item in itens %}
-                        <option value="{{item[0]}}">{{item[0]}}</option>
+                        <option value="{{item[0]}}" data-unidade="{{item[1]}}">{{item[0]}}</option>
                     {% endfor %}
                 </select>
+            </label>
+            <br>
+            <!-- Adicionando um novo label para a unidade -->
+            <label for="unidadeLabel" style="color: white;">
+                <span id="unidadeLabel"></span>
             </label>
 
         </div>
@@ -658,6 +662,21 @@
             mensagemElement.style.top = '-204px'; // Define a posição para esconder a mensagem
             }, 3000); // 3000 milissegundos = 3 segundos
         }
+    </script>
+
+    <script>
+        // Inicialize o Select2
+        $('#selectItem').select2();
+
+        // Captura o evento de mudança no selectItem
+        $('#selectItem').on('change', function() {
+            // Obtém o valor selecionado
+            var selectedValue = $(this).val();
+            // Obtém o atributo 'data-unidade' do item selecionado
+            var selectedUnidade = $(this).find(':selected').data('unidade');
+            // Encontra o elemento com id unidadeLabel e define seu conteúdo
+            $('#unidadeLabel').text(selectedValue ? "Unidade - " + selectedUnidade : "");
+        });
     </script>
 
 </body>
