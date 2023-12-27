@@ -63,7 +63,7 @@ def index():
     cur.execute("select distinct concat(codigo_ccusto, ' - ', ccusto) from requisicao.base_requisicoes_2023")
     ccustos = cur.fetchall()
 
-    cur.execute("select concat(t1.codigo, ' - ', t2.descricao) as codigo_descricao, unidade from requisicao.base_requisicoes_2023 as t1 left join requisicao.unidades as t2 on t1.codigo = t2.codigo")
+    cur.execute("select distinct concat(t1.codigo, ' - ', t2.descricao) as codigo_descricao, unidade from requisicao.base_requisicoes_2023 as t1 left join requisicao.unidades as t2 on t1.codigo = t2.codigo")
     itens = cur.fetchall()
 
     # Transferência
