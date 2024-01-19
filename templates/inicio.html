@@ -1,0 +1,503 @@
+{% extends 'sidebar.html' %}
+
+{% block title %}
+<title>Sistema de requisição</title>
+{% endblock %}
+
+{% block links %}
+<!-- Custom styles for this page -->
+<link rel= "stylesheet" type= "text/css" href= "{{ url_for('static',filename='vendor/datatables/dataTables.bootstrap4.min.css') }}">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-multiselect/0.9.15/css/bootstrap-multiselect.css" />
+
+<style>
+    .hidden {
+        display: none;
+    }
+</style>
+
+{% endblock %}
+
+{% block containerFluid %}
+
+
+<div class="container-fluid">
+
+    <!-- Page Heading -->
+    <div class="d-sm-flex align-items-center justify-content-between mb-4">
+        <h1 class="h3 mb-0 text-gray-800">Sistema de requisições</h1>
+        <a href="#" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"><i
+                class="fas fa-download fa-sm text-white-50"></i> Generate Report</a>
+    </div>
+
+    <!-- Content Row -->
+    <!-- Cards -->
+    <div class="row">
+
+        <!-- Earnings (Monthly) Card Example -->
+        <div class="col-xl-3 col-md-6 mb-4">
+            <div class="card border-left-primary shadow h-100 py-2">
+                <div class="card-body">
+                    <div class="row no-gutters align-items-center">
+                        <div class="col mr-2">
+                            <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
+                                Requisições pendentes</div>
+                            <div class="h5 mb-0 font-weight-bold text-gray-800">$40,000</div>
+                        </div>
+                        <div class="col-auto">
+                            <i class="fas fa-calendar fa-2x text-gray-300"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Earnings (Monthly) Card Example -->
+        <div class="col-xl-3 col-md-6 mb-4">
+            <div class="card border-left-success shadow h-100 py-2">
+                <div class="card-body">
+                    <div class="row no-gutters align-items-center">
+                        <div class="col mr-2">
+                            <div class="text-xs font-weight-bold text-success text-uppercase mb-1">
+                                Transferências pendentes</div>
+                            <div class="h5 mb-0 font-weight-bold text-gray-800">$215,000</div>
+                        </div>
+                        <div class="col-auto">
+                            <i class="fas fa-dollar-sign fa-2x text-gray-300"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- Content Row -->
+    <!-- Tabela requisições -->
+    <div class="row">
+
+        <!-- Nav tabs -->
+        <div class="col-xl-12">
+            <ul class="nav nav-tabs">
+                <li class="nav-item">
+                    <a id="tabRequisicao" style="cursor: pointer;" class="nav-link active" onclick="mostrarDiv('tableRequisicao','tabRequisicao')">Requisições</a>
+                </li>
+                <li class="nav-item">
+                    <a id="tabTransferencia" style="cursor: pointer;" class="nav-link" onclick="mostrarDiv('tableTransferencia','tabTransferencia')">Transferências</a>
+                </li>
+            </ul>
+        </div>
+
+        <!-- Tabela de requisições -->
+        <div class="col-xl-12 col-lg-7" id="tableRequisicao">
+            <div class="card shadow mb-4">
+                <!-- Card Header - Dropdown -->
+                <!-- <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+                    <h6 class="m-0 font-weight-bold text-primary">Requisições</h6>
+                </div> -->
+                <!-- Card Body -->
+                <div class="card-body">
+                    <div class="table-responsive">
+                        <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                            <thead style="font-size: small;">
+                                <tr>
+                                    <th style="display: none;">Chave</th>
+                                    <th>Requisitante</th>
+                                    <th>Centro de custo</th>
+                                    <th>Item</th>
+                                    <th>Quantidade</th>
+                                    <th>Classe de recurso</th>
+                                    <th>Data da requisição</th>
+                                    <th>Observação</th>    
+                                    <th>
+                                        <div class="d-flex justify-content-between">
+                                            <div class="col-sm-4">Autorizar</div>
+                                            <div class="col-sm-4">Salvar</div>
+                                            <div class="col-sm-4">Excluir</div>
+                                        </div>
+                                    </th>
+                                </tr>
+                            </thead>
+                            <tbody style="font-size: small;">
+                                {% for requisicao in requisicoes %}
+                                <tr>
+                                    <td style="display: none;">{{requisicao[0]}}</td>
+                                    <td>{{requisicao[1]}}</td>
+                                    <td>{{requisicao[2]}}</td>
+                                    <td>
+                                        <input type="text" value="{{requisicao[3]}}" class="form-control" style="width: 335px;">
+                                    </td>
+                                    <td>
+                                        <input type="number" value="{{requisicao[4]}}" class="form-control">
+                                    </td>
+                                    <td>{{requisicao[5]}}</td>
+                                    <td>{{requisicao[12]}}</td>
+                                    <td>{{requisicao[7]}}</td>
+                                    <td>
+                                        <div class="d-flex justify-content-between">
+                                            <div class="col-sm-4">
+                                                <!-- <button style="border: 0px;" class="form-control"><input type="checkbox" id="checkbox{{requisicao[0]}}" class="checkbox" onclick="this.blur();"></button> -->
+                                                <button style="border: 0px;" data-chave="{{requisicao[0]}}" class="form-control btn-send" onclick="this.blur();"><i class="fa fa-angle-double-right"></i></button>
+                                            </div>
+                                            <div class="col-sm-4">
+                                                <button style="border: 0px;" data-chave="{{requisicao[0]}}" class="form-control btn-save" onclick="this.blur();"><i class="far fa-save fa-lg"></i></button>
+                                            </div>
+                                            <div class="col-sm-4">
+                                                <button style="border: 0px;" data-toggle="modal" data-target="#confirmExclusionModal" data-chave="{{requisicao[0]}}" class="form-control btn-remove" onclick="this.blur();"><i class="fa fa-trash"></i></button>
+                                            </div>
+                                        </div>
+                                    </td>
+                                </tr>
+                               {% endfor %}
+                            </tbody>
+                            <tfoot style="font-size: small;">
+                                <tr>
+                                    <th style="display: none;">Chave</th>
+                                    <th>Requisitante</th>
+                                    <th>Centro de custo</th>
+                                    <th>Item</th>
+                                    <th>Quantidade</th>
+                                    <th>Classe de recurso</th>
+                                    <th>Data da requisição</th>
+                                    <th>Observação</th>    
+                                    <th>Ações</th>                                                                
+                                </tr>
+                            </tfoot>
+                        </table>
+                    </div>
+                </div>
+                <!-- <div class="card-footer">
+                    <button id="enviarBtn" type="button" class="btn btn-success">Enviar</button>
+                </div> -->
+            </div>
+        </div>
+
+        <!-- Tabela de transferências -->
+        <div class="col-xl-12 col-lg-7 hidden" id="tableTransferencia">
+            <div class="card shadow mb-4">
+                <!-- Card Header - Dropdown -->
+                <!-- <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+                    <h6 class="m-0 font-weight-bold text-primary">Transferências</h6>
+                </div> -->
+                <!-- Card Body -->
+                <div class="card-body">
+                    <div class="table-responsive">
+                        <table class="table table-bordered" id="dataTable2" width="100%" cellspacing="0">
+                            <thead style="font-size: small;">
+                                <tr>
+                                    <th style="display: none;">Chave</th>
+                                    <th>Requisitante</th>
+                                    <th>Depósito destino</th>
+                                    <th>Item</th>
+                                    <th>Quantidade</th>
+                                    <th>Data da requisição</th>
+                                    <th>
+                                        <div class="d-flex justify-content-between">
+                                            <div class="col-sm-4">Autorizar</div>
+                                            <div class="col-sm-4">Salvar</div>
+                                            <div class="col-sm-4">Excluir</div>
+                                        </div>
+                                    </th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for transferencia in transferencias %}
+                                <tr>
+                                    <td>{{transferencia[2]}}</td>
+                                    <td>{{transferencia[3]}}</td>
+                                    <td>{{transferencia[4]}}</td>
+                                    <td>{{transferencia[5]}}</td>
+                                    <td>{{transferencia[1]}}</td>
+                                    <td>
+                                        <div class="d-flex justify-content-between">
+                                            <div class="col-sm-4">
+                                                <!-- <button style="border: 0px;" class="form-control"><input type="checkbox" id="checkbox{{transferencia[0]}}" class="checkbox" onclick="this.blur();"></button> -->
+                                                <button style="border: 0px;" data-chave="{{transferencia[0]}}" class="form-control btn-send" onclick="this.blur();"><i class="fa fa-angle-double-right"></i></button>
+                                            </div>
+                                            <div class="col-sm-4">
+                                                <button style="border: 0px;" data-chave="{{transferencia[0]}}" class="form-control btn-save" onclick="this.blur();"><i class="far fa-save fa-lg"></i></button>
+                                            </div>
+                                            <div class="col-sm-4">
+                                                <button style="border: 0px;" data-toggle="modal" data-target="#confirmExclusionModalTransferencia" data-chave="{{transferencia[0]}}" class="form-control btn-remove" onclick="this.blur();"><i class="fa fa-trash"></i></button>
+                                            </div>
+                                        </div>
+                                    </td>
+                                </tr>
+                               {% endfor %}
+                            </tbody>
+                            <tfoot>
+                                <tr>
+                                    <th style="display: none;">Chave</th>
+                                    <th>Requisitante</th>
+                                    <th>Depósito destino</th>
+                                    <th>Item</th>
+                                    <th>Quantidade</th>
+                                    <th>Data da requisição</th>
+                                    <th>
+                                        <div class="d-flex justify-content-between">
+                                            <div class="col-sm-4">Autorizar</div>
+                                            <div class="col-sm-4">Salvar</div>
+                                            <div class="col-sm-4">Excluir</div>
+                                        </div>
+                                    </th>
+                                </tr>
+                            </tfoot>
+                        </table>
+                    </div>
+                </div>
+                <!-- <div class="card-footer">
+                    <button id="enviarBtn" type="button" class="btn btn-success">Enviar</button>
+                </div> -->
+            </div>
+        </div>
+
+        <!-- Modal para confirmar a exclusão da requisição -->
+        <div class="modal fade" id="confirmExclusionModal" tabindex="-1" role="dialog" aria-labelledby="confirmExclusionModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="confirmExclusionModalLabel">Confirmação de Exclusão</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <p>Informe o motivo da exclusão:</p>
+                        <input type="text" class="form-control" id="exclusionReason" placeholder="Motivo da exclusão">
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+                        <button type="button" class="btn btn-danger" id="confirmExclusionBtn">Confirmar Exclusão</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Modal para confirmar a exclusão da transferência -->
+        <div class="modal fade" id="confirmExclusionModalTransferencia" tabindex="-1" role="dialog" aria-labelledby="confirmExclusionModalTransferenciaLabel" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="confirmExclusionModalTransferencia">Confirmação de Exclusão</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <p>Informe o motivo da exclusão:</p>
+                        <input type="text" class="form-control" id="exclusionReasonTranferencia" placeholder="Motivo da exclusão">
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+                        <button type="button" class="btn btn-danger" id="confirmExclusionTransferenciaBtn">Confirmar Exclusão</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- Mensagem de alerta ou sucesso -->
+    <div id="mensagem" style="z-index: 10000;"></div>
+
+</div>
+
+{% endblock %}
+
+{% block scripts %}
+
+<!-- Page level plugins -->
+<script src="static/vendor/datatables/jquery.dataTables.min.js"></script>
+<script src="static/vendor/datatables/dataTables.bootstrap4.min.js"></script>
+
+<!-- Page level custom scripts -->
+<script src="static/js/demo/datatables-demo.js"></script>
+
+<!-- Salvar edição da linha -->
+<script>
+    $(document).ready(function () {
+        // Utilizando a delegação de eventos do DataTable
+        $('#dataTable').on('click', '.btn-save', function () {
+
+            var row = $(this).closest('tr');
+
+            // Obtém os valores pelos índices
+            var chave = row.find('td:eq(0)').text();  // Segundo <td>
+            var itemValue = row.find('td:eq(3) input').val();  // Segundo <td>
+            var quantityValue = row.find('td:eq(4) input').val();  // Segundo <td>
+            
+            if (itemValue === '' | quantityValue === '') {
+                exibirMensagem('aviso','Preencha todos os campos da linha.')
+                return;
+            } 
+
+            // Exemplo de envio de dados para o backend usando AJAX
+            $.ajax({
+                type: 'POST',
+                url: '/salvar-edicao-tabela-requisicao',
+                data: {
+                    chave: chave,
+                    item: itemValue,
+                    quantidade: quantityValue,
+                },
+                success: function (response) {
+                    // Lidar com a resposta do backend, se necessário
+                    console.log('Sucesso!', response);
+                    exibirMensagem('sucesso','Item salvo com sucesso.')
+                    
+                },
+                error: function (error) {
+                    console.error('Erro!', error);
+
+                }
+            });
+        });
+    });
+
+
+</script>
+
+<!-- Alternar entre tabelas -->
+<script>
+    
+    function mostrarDiv(divId,divIdTab) {
+        // Esconde todas as divs
+        $('.col-xl-12.col-lg-7').addClass('hidden');
+        
+        // Remove a classe active de todas as guias
+        $('.nav-link').removeClass('active');
+
+        // Exibe a div correspondente à guia clicada
+        $('#' + divId).removeClass('hidden');
+
+        // Adiciona a classe active à guia clicada
+        $('#' + divIdTab).addClass('active');
+    }
+
+</script>
+    
+<!-- Modal de exclusão -->
+<script>
+    $(document).ready(function () {
+        // Manipulador de eventos para o botão de confirmação de exclusão
+        $('#dataTable').on('click', '.btn-remove', function () {
+            $('#exclusionReason').val('');
+
+            var row = $(this).closest('tr');
+            var chave = row.find('td:eq(0)').text();  // Segundo <td>
+
+            // Adiciona um manipulador de eventos ao botão de confirmação dentro do modal
+            $('#confirmExclusionBtn').off().on('click', function () {
+                var motivo = $('#exclusionReason').val();
+
+                if (motivo === '') {
+                    exibirMensagem('aviso', 'Preencha o motivo.');
+                    return;
+                }
+
+                $('#confirmExclusionModal').modal('hide');
+                $('#exclusionReason').val('');
+
+                $.ajax({
+                    type: 'POST',
+                    url: '/exclusao-requisicao',
+                    data: {
+                        chave: chave,
+                        motivo: motivo,
+                    },
+                    success: atualizarTabelaRequisicao,
+                    error: function (error) {
+                        console.error('Erro!', error);
+                    }
+                });
+            });
+        });
+    });
+</script>
+
+<!-- Pop up de mensagem sucesso e aviso -->
+<script src="static/js/mensagem.js"></script>
+
+<!-- Autorizar requisição -->
+<script>
+
+    $(document).ready(function () {
+        // Utilizando a delegação de eventos do DataTable
+        $('#dataTable').on('click', '.btn-send', function () {
+
+            var row = $(this).closest('tr');
+
+            // Obtém os valores pelos índices
+            var chave = row.find('td:eq(0)').text();  // Segundo <td>
+            var itemValue = row.find('td:eq(3) input').val();  // Segundo <td>
+            var quantityValue = row.find('td:eq(4) input').val();  // Segundo <td>
+            
+            if (itemValue === '' | quantityValue === '') {
+                exibirMensagem('aviso','Preencha todos os campos da linha.')
+                return;
+            } 
+
+            $.ajax({
+                type: 'POST',
+                url: '/autorizar-requisicao',
+                data: {
+                    chave: chave
+                },
+                success: atualizarTabelaRequisicao,
+                error: function (error) {
+                    console.error('Erro!', error);
+                }
+            });
+        });
+    });
+
+</script>
+
+<!-- Função para atualizar tabela de requisicao -->
+<script>
+    function atualizarTabelaRequisicao(response) {
+        // Lidar com a resposta do backend, se necessário
+        console.log('Sucesso!', response);
+
+        // Destroi a instância DataTable existente
+        $('#dataTable').DataTable().destroy();
+
+        // Limpa o conteúdo atual da tabela
+        $('#dataTable tbody').html('');
+
+        // Adiciona as novas linhas à tabela
+        for (var i = 0; i < response.length; i++) {
+            var requisicao = response[i];
+            var newRow = '<tr>' +
+                '<td style="display: none;">' + requisicao[0] + '</td>' +
+                '<td>' + requisicao[1] + '</td>' +
+                '<td>' + requisicao[2] + '</td>' +
+                '<td><input type="text" value="' + requisicao[3] + '" class="form-control" style="width: 335px;"></td>' +
+                '<td><input type="number" value="' + requisicao[4] + '" class="form-control"></td>' +
+                '<td>' + requisicao[5] + '</td>' +
+                '<td>' + requisicao[12] + '</td>' +
+                '<td>' + requisicao[7] + '</td>' +
+                '<td>' +
+                '<div class="d-flex justify-content-between">' +
+                '<div class="col-sm-4">' +
+                '<button style="border: 0px;" data-chave="' + requisicao[0] + '" class="form-control btn-send" onclick="this.blur();"><i class="fa fa-angle-double-right"></i></button>' +
+                '</div>' +
+                '<div class="col-sm-4">' +
+                '<button style="border: 0px;" data-chave="' + requisicao[0] + '" class="form-control btn-save" onclick="this.blur();"><i class="far fa-save fa-lg"></i></button>' +
+                '</div>' +
+                '<div class="col-sm-4">' +
+                '<button style="border: 0px;" data-toggle="modal" data-target="#confirmExclusionModal" data-chave="' + requisicao[0] + '" class="form-control btn-remove" onclick="this.blur();"><i class="fa fa-trash"></i></button>' +
+                '</div>' +
+                '</div>' +
+                '</td>' +
+                '</tr>';
+            $('#dataTable tbody').append(newRow);
+        }
+
+        // Cria uma nova instância DataTable
+        $('#dataTable').DataTable();
+
+        exibirMensagem('sucesso', 'Requisição autorizada com sucesso.');
+    }
+</script>
+
+{% endblock %}

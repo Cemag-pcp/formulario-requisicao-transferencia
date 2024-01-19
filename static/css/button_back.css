@@ -1,0 +1,40 @@
+.botao-voltar {
+    display: inline-flex;
+    justify-content: center;
+    color: #333;
+    z-index: 4;
+    background-color: #fff;
+    place-items: center;
+    padding: 12px;
+    font-size: 24px;
+    border: solid 1px black;
+    cursor: pointer;
+    outline: none;
+    text-decoration: none;
+    }
+    
+    @media(max-width:600px){
+    
+        .botao-voltar {
+            display: inline-flex;
+            justify-content: center;
+            color: #333;
+            z-index: 4;
+            background-color: #fff;
+            place-items: center;
+            padding: 9px;
+            font-size: 24px;
+            border: solid 1px black;
+            cursor: pointer;
+            outline: none;
+            text-decoration: none;
+            }
+        }
+    
+    .botao-voltar:hover {
+    background-color: #e6e6e6;
+    }
+    
+    .botao-voltar:focus {
+    outline: none;
+    }

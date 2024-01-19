@@ -1,0 +1,28 @@
+/* Estilo para limitar o tamanho do modal */
+#imagemModal .modal-dialog {
+    max-width: 800px; /* Defina o tamanho máximo do modal conforme necessário */
+}
+
+#imagemModal .modal-body {
+    max-height: 500px;
+    overflow-y: auto;
+    display: flex;
+    overflow-x: auto;
+    justify-content: flex-start;
+}
+
+#imagemModal2 .modal-body {
+    height: 100%;
+}
+/* Estilo para ajustar o tamanho do vídeo */
+#imagemModal video {
+    width: 100%; /* O vídeo ocupará toda a largura disponível dentro do modal */
+    height: 500; /* A altura será ajustada automaticamente proporcionalmente à largura para evitar distorção */
+}
+
+.modal-body {
+    position: relative;
+    display: flex;
+    padding: 1rem;
+    justify-content: center;
+}
