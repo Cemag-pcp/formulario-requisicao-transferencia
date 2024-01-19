@@ -268,25 +268,14 @@
             }
         });
 
-        document.addEventListener('click', function (event) {
-            var dropdown = document.getElementById('dropdown');
-            var input = document.getElementById('dropdownInput');
-            var list = document.getElementById('dropdownList');
-
-            if (dropdown.contains(event.target)) {
-                // Clicou dentro do dropdown, mostra a lista
-                // list.style.display = 'block';
-            } else {
-                // Clicou fora do dropdown, esconde a lista
-                list.style.display = 'none';
-            }
-        });
-
         document.getElementById('dropdownList').addEventListener('click', function (event) {
+            var list = document.getElementById('dropdownList');
             var input = document.getElementById('dropdownInput');
+            
             if (event.target.tagName.toLowerCase() === 'li') {
                 // Clicou em um item da lista, preenche o input com o texto do item
                 input.value = event.target.textContent;
+                list.style.display = 'none'; // Fecha o dropdown após escolher o item
             }
         });
 
@@ -332,6 +321,7 @@
             if (dropdown.contains(event.target)) {
                 // Clicou dentro do dropdown, mostra a lista
                 // list.style.display = 'block';
+                list.style.display = 'none';
             } else {
                 // Clicou fora do dropdown, esconde a lista
                 list.style.display = 'none';
@@ -382,9 +372,17 @@
 
         document.getElementById('listCcustoDropdown').addEventListener('click', function (event) {
             var input = document.getElementById('inputCcustoDropdown');
+            var list = document.getElementById('listCcustoDropdown');
+            
             if (event.target.tagName.toLowerCase() === 'li') {
                 // Clicou em um item da lista, preenche o input com o texto do item
                 input.value = event.target.textContent;
+
+                // Use setTimeout para adicionar um pequeno atraso antes de esconder a lista
+                setTimeout(function () {
+                    list.style.display = 'none';
+                }, 100); // Ajuste o valor do timeout conforme necessário
+
             }
         });
 
@@ -413,20 +411,29 @@
             var input = document.getElementById('inputDepositoDropdown');
             var list = document.getElementById('listDepositoDropdown');
 
-            if (dropdown.contains(event.target)) {
-                // Clicou dentro do dropdown, mostra a lista
+            // Verifica se o clique foi dentro do dropdown ou em um item da lista
+            if (dropdown.contains(event.target) || list.contains(event.target)) {
+                // Clicou dentro do dropdown ou na lista, não esconde a lista
                 list.style.display = 'block';
             } else {
-                // Clicou fora do dropdown, esconde a lista
+                // Clicou fora do dropdown e da lista, esconde a lista
                 list.style.display = 'none';
             }
         });
 
         document.getElementById('listDepositoDropdown').addEventListener('click', function (event) {
             var input = document.getElementById('inputDepositoDropdown');
+            var list = document.getElementById('listDepositoDropdown');
+
             if (event.target.tagName.toLowerCase() === 'li') {
                 // Clicou em um item da lista, preenche o input com o texto do item
                 input.value = event.target.textContent;
+                console.log('esconde lista');
+
+                // Use setTimeout para adicionar um pequeno atraso antes de esconder a lista
+                setTimeout(function () {
+                    list.style.display = 'none';
+                }, 100); // Ajuste o valor do timeout conforme necessário
             }
         });
 
@@ -445,6 +452,7 @@
                 }
             }
         });
+
     </script>
 
     <!-- Dropdown de Itens -->
@@ -468,12 +476,15 @@
         document.getElementById('listItemDropdown').addEventListener('click', function (event) {
             var input = document.getElementById('inputItemDropdown');
             var list = document.getElementById('listItemDropdown');
-            list.style.display = 'none';
 
             if (event.target.tagName.toLowerCase() === 'li') {
                 // Clicou em um item da lista, preenche o input com o texto do item
                 input.value = event.target.textContent;
                 // Clicou em um item da lista, esconde a lista
+                // Use setTimeout para adicionar um pequeno atraso antes de esconder a lista
+                setTimeout(function () {
+                    list.style.display = 'none';
+                }, 100); // Ajuste o valor do timeout conforme necessário
             }
         });
     
@@ -517,12 +528,15 @@
         document.getElementById('listItemTransferenciaDropdown').addEventListener('click', function (event) {
             var input = document.getElementById('inputItemTransferenciaDropdown');
             var list = document.getElementById('listItemTransferenciaDropdown');
-            list.style.display = 'none';
 
             if (event.target.tagName.toLowerCase() === 'li') {
                 // Clicou em um item da lista, preenche o input com o texto do item
                 input.value = event.target.textContent;
                 // Clicou em um item da lista, esconde a lista
+                // Use setTimeout para adicionar um pequeno atraso antes de esconder a lista
+                setTimeout(function () {
+                    list.style.display = 'none';
+                }, 100); // Ajuste o valor do timeout conforme necessário
             }
         });
     
@@ -564,9 +578,17 @@
 
         document.getElementById('listClasseDropdown').addEventListener('click', function (event) {
             var input = document.getElementById('inputClasseDropdown');
+            var list = document.getElementById('listClasseDropdown');
+            var input = document.getElementById('inputClasseDropdown');
+
             if (event.target.tagName.toLowerCase() === 'li') {
                 // Clicou em um item da lista, preenche o input com o texto do item
                 input.value = event.target.textContent;
+
+                // Use setTimeout para adicionar um pequeno atraso antes de esconder a lista
+                setTimeout(function () {
+                    list.style.display = 'none';
+                }, 100); // Ajuste o valor do timeout conforme necessário
             }
         });
 
