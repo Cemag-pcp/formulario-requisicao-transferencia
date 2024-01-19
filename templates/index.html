@@ -2,485 +2,789 @@
 <html lang="en">
 
 <head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Requisição CEMAG</title>
- 
-    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/style.css') }}">
-    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/load.css') }}">
-    <!-- <script src="{{ url_for('static', filename='js/script.js') }}"></script> -->
 
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/css/select2.min.css">
-    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/js/select2.min.js"></script>
-    
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title>Requisições e transferências</title>
+
+    <!-- Custom fonts for this template-->
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='vendor/fontawesome-free/css/all.min.css') }}">
+
+    <link
+        href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
+        rel="stylesheet">
+
+    <!-- Custom styles for this template-->
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/sb-admin-2.min.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/label-floating.css') }}">
+
+    <!-- Loading -->
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/loading.css') }}">
+
+    <!-- Dropdown input list -->
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/dropdown.css') }}">
+
+    <!-- Mensagem -->
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/mensagem.css') }}">
+
 </head>
 
-<body>
-    
-    <div class="container" id="formulario_requisicao">
-        
-        <div class="form-btns-menu">
-            <button onclick="mostrarFormulario('formulario_requisicao')">Requisição</button>
-            <button onclick="mostrarFormulario('formulario_transferencia')">Transferência</button>
+<body class="bg-gradient-primary">
+    <div class="container">
+        <div class="row justify-content-center align-items-center vh-100">
+            <div class="card">
+                <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+                    <!-- <div class="col-sm-4">
+                    </div> -->
+                    <div class="col-sm-4">
+                        <input type="radio" name="options" id="option1" checked>Requisição
+                    </div>
+                    <div class="col-sm-4">
+                        <input type="radio" name="options" id="option2">Transferência
+                    </div>
+                </div>                               
+                <div class="card-body">
+                    <div id="formRequisicoes">
+                        <div class="form row text-center">
+                            <div class="col-12 mb-3">
+                                <h6 class="m-0 font-weight-bold text-primary" id="tituloFormulario"></h6>
+                            </div>
+                        </div>
+                        <div class="form row">
+                            <div class="col-sm-6 mb-3">
+                                <div class="dropdown" id="dropdown">
+                                    <div class="label-float">
+                                        <input type="text" class="dropdown-input form-control" id="dropdownInput" placeholder=" ">
+                                        <label>Nome ou matrícula</label>
+                                    </div>
+                                    <ul class="dropdown-list" id="dropdownList" style="overflow-y: auto;">
+                                        {% for matricula in matriculas %}
+                                            <li>{{matricula[0]}}</li>
+                                        {% endfor %}
+                                        <!-- Adicione mais opções conforme necessário -->
+                                    </ul>
+                                </div>
+                                <small id="dropdownInput" class="form-text text-muted"><strong>Obrigatório</strong></small>
+                            </div>
+                            <div class="col-sm-6 mb-3">
+                                <div class="dropdown" id="dropdown-ccusto">
+                                    <div class="label-float">
+                                        <input type="text" class="dropdown-input form-control" id="inputCcustoDropdown" placeholder=" ">
+                                        <label>Centro de custo</label>
+                                    </div>
+                                    <ul class="dropdown-list" id="listCcustoDropdown">
+                                        {% for ccusto in ccustos %}
+                                            <li>{{ccusto[0]}}</li>
+                                        {% endfor %}
+                                    </ul>
+                                </div>
+                                <small id="inputCcustoDropdown" class="form-text text-muted"><strong>Obrigatório</strong></small>
+                            </div>
+                        </div>
+                        <div class="form row">
+                            <div class="col-sm-6 mb-3">
+                                <div class="dropdown" id="dropdown-item">
+                                    <div class="label-float">
+                                        <input type="text" class="dropdown-input form-control" id="inputItemDropdown" placeholder=" ">
+                                        <label>Item</label>
+                                    </div>
+                                    <ul class="dropdown-list" id="listItemDropdown">
+                                        {% for item in itens %}
+                                            <li>{{item[0]}}</li>
+                                        {% endfor %}
+                                    </ul>
+                                </div>
+                                <small id="inputItemDropdown" class="form-text text-muted"><strong>Obrigatório</strong></small>
+                            </div>
+                            <div class="col-sm-6 mb-3">
+                                <div class="dropdown" id="dropdown-classe">
+                                    <div class="label-float">
+                                        <input type="text" class="dropdown-input form-control" id="inputClasseDropdown" placeholder=" ">
+                                        <label>Classe da requisição</label>
+                                    </div>
+                                    <ul class="dropdown-list" id="listClasseDropdown">
+                                        <li></li>
+                                    </ul>
+                                </div>
+                                <small id="inputClasseDropdown" class="form-text text-muted"><strong>Obrigatório</strong></small>
+                            </div>
+                        </div>
+                        <div class="form row">
+                            <div class="col-sm-6 mb-3">
+                                <div class="dropdown" id="dropdown">
+                                    <div class="label-float">
+                                        <input type="number" class="dropdown-input form-control" id="quantidade" placeholder=" ">
+                                        <label>Quantidade</label>
+                                    </div>
+                                </div>
+                                <small id="quantidade_unidade" class="form-text text-muted"><strong>Unidade: </strong></small>
+                            </div>
+                            <div class="col-sm-6 mb-3">
+                                <div class="dropdown">
+                                    <div class="label-float">
+                                        <input type="text" class="dropdown-input form-control" id="observacao" placeholder=" ">
+                                        <label>Observação</label>
+                                        <small id="observacao" class="form-text text-muted"><strong>Opcional</strong></small>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div id="formTransferencia"  style="display: none;">
+                        <div class="form row text-center">
+                            <div class="col-12 mb-3">
+                                <h6 class="m-0 font-weight-bold text-primary" id="tituloFormularioTranferencia"></h6>
+                            </div>
+                        </div>
+                        <div class="form row">
+                            <div class="col-12 col-sm-6 mb-3">
+                                <div class="dropdown" id="dropdownTransferencia">
+                                    <div class="label-float">
+                                        <input type="text" class="dropdown-input form-control" id="dropdownInputTransferencia" placeholder=" ">
+                                        <label>Nome ou matrícula</label>
+                                    </div>
+                                    <ul class="dropdown-list" id="dropdownListTransferencia" style="overflow-y: auto;">
+                                        {% for matricula in matriculas %}
+                                            <li>{{matricula[0]}}</li>
+                                        {% endfor %}
+                                        <!-- Adicione mais opções conforme necessário -->
+                                    </ul>
+                                </div>
+                                <small id="dropdownInputTransferencia" class="form-text text-muted"><strong>Obrigatório</strong></small>
+                            </div>
+                            <div class="col-12 col-sm-6 mb-3">
+                                <div class="dropdown" id="dropdownDepositoTransferencia">
+                                    <div class="label-float">
+                                        <input type="text" class="dropdown-input form-control" id="inputDepositoDropdown" placeholder=" ">
+                                        <label>Depósito destino</label>
+                                    </div>
+                                    <ul class="dropdown-list" id="listDepositoDropdown">
+                                        {% for deposito in deposito_destino %}
+                                            <li>{{deposito[0]}}</li>
+                                        {% endfor %}
+                                        <!-- Adicione mais opções conforme necessário -->
+                                    </ul>
+                                </div>
+                                <small id="inputDepositoDropdown" class="form-text text-muted"><strong>Obrigatório</strong></small>
+                            </div>
+                        </div>
+                        <div class="form row">
+                            <div class="col-sm-6 mb-3">
+                                <div class="dropdown" id="dropdownItemTransferencia">
+                                    <div class="label-float">
+                                        <input type="text" class="dropdown-input form-control" id="inputItemTransferenciaDropdown" placeholder=" ">
+                                        <label>Recurso</label>
+                                    </div>
+                                    <ul class="dropdown-list" id="listItemTransferenciaDropdown">
+                                        {% for recurso in recursos_transferencia %}
+                                            <li>{{recurso[0]}}</li>
+                                        {% endfor %}
+                                    </ul>
+                                </div>
+                                <small id="inputItemTransferenciaDropdown" class="form-text text-muted"><strong>Obrigatório</strong></small>
+                            </div>
+                            <div class="col-sm-6 mb-3">
+                                <div class="dropdown" id="dropdown">
+                                    <div class="label-float">
+                                        <input type="number" class="dropdown-input form-control" id="quantidadeTransferencia" placeholder=" ">
+                                        <label>Quantidade</label>
+                                        <small id="quantidadeUnidade" class="form-text text-muted"><strong>Obrigatório</strong></small>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="card-footer">
+                    <div class="row">
+                        <div class="col-12">
+                            <button class="form-control" id="btn-salvar-transferencia" style="display: none;">Salvar</button>
+                            <button class="form-control" id="btn-salvar-requisicao">Salvar</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
-        
-        <h2>Fomulário para requisição</h2>
-
-        
-            
-        <!-- <div class="form-item-username">
-        
-            <select style="width: 150px;" id="selectFuncionario" class="selectFuncionario" name="selectFuncionario" required>
-                <option value="" selected disabled hidden>Matrícula</option> 
-
-            </select>
-        
-        </div> -->
-        
-        <div class="form-item">
-
-            <label for="label" style="color: white;">
-                Nome ou Matrícula (obrigatório):
-
-                <!-- <select style="width: 300px;" id="selectFuncionario" class="selectFuncionario" name="selectFuncionario" required>
-                    <option value="" selected disabled hidden></option> 
-                    {% for matricula in matriculas %}
-                        <option value="{{matricula[0]}}">{{matricula[0]}}</option>
-                    {% endfor %}
-                </select> -->
-
-                <select style="width: 300px;" id="selectFuncionario" class="selectFuncionario" name="selectFuncionario" required>
-
-                </select>
-                
-            </label>
-
-        </div>
-
-        <div class="form-item">
-            
-            <label for="label" style="color: white;">
-                Centro de custo (obrigatório):
-
-                <select id="selectCcusto" class="selectCcusto" name="selectCcusto" required>
-                    <option value="" selected disabled hidden></option> 
-                    {% for ccusto in ccustos %}
-                        <option value="{{ccusto[0]}}">{{ccusto[0]}}</option>
-                    {% endfor %}
-                </select>
-            
-            </label>
-
-        </div>
-
-        <div class="form-item">
-
-            <label for="label" style="color: white;">
-                Item (obrigatório):
-            
-                <select id="selectItem" class="selectItem" name="selectItem" required>
-                    <option value="" selected disabled hidden></option> 
-                    {% for item in itens %}
-                        <option value="{{item[0]}}" data-unidade="{{item[1]}}">{{item[0]}}</option>
-                    {% endfor %}
-                </select>
-            </label>
-            <br>
-            <!-- Adicionando um novo label para a unidade -->
-            <label for="unidadeLabel" style="color: white;">
-                <span id="unidadeLabel"></span>
-            </label>
-
-        </div>
-
-        <div class="form-item">
-
-            <label for="label" style="color: white;">
-                Classe da requisição (obrigatório):
-            
-                <select id="selectClasse" class="selectClasse" name="selectClasse" required>
-
-                </select>
-            </label>
-
-        </div>
-
-        <div class="form-item">
-
-            <label style="margin-right: 30px; color: white;" for="title" style="color: white;">
-                
-                <!-- <input type="number" name="quantidade" id="quantidade" min="0.1" max="999999" required>  -->
-                <label  style="margin-right: 30px; color: white;" for="title">Observação (opcional): </label>
-                <textarea id="texto_observacao" rows="5" cols="35" id="title" name="title"></textarea>
-
-            </label>
-
-        </div>
-
-        <div class="form-item">
-
-            <label style="margin-right: 30px; color: white;" for="label" style="color: white;">
-                Quantidade (obrigatório):
-                <!-- <input type="number" name="quantidade" id="quantidade" min="0.1" max="999999" required>  -->
-                <input type="number" id="quantidade" name="quantidade" required><br><br>
-
-            </label>
-
-        </div>
-
-        <!-- <div class="accept-box">
-            <input type="checkbox" name="accept" id="accept">
-            <p>I accept the <a href="#">Terms & Conditions</a></p>
-        </div> -->
-
-        <div class="form-btns">
-            <button class="signup" id="btn-salvar-requisicao">Confirmar</button>
-        </div>
- 
     </div>
 
-    <div class="container" id="formulario_transferencia">
-        
-        <div class="form-btns-menu">
-            <button onclick="mostrarFormulario('formulario_requisicao')">Requisição</button>
-            <button onclick="mostrarFormulario('formulario_transferencia')">Transferência</button>
+    <div class="loading" id="loading" style="display: none;">
+        <div class="spinner-border text-primary" role="status">
+            <span class="sr-only">Loading...</span>
         </div>
+    </div>
 
-        <h2>Fomulário para transferência</h2>
-            
-        <!-- <div class="form-item-username">
-        
-            <select style="width: 150px;" id="selectFuncionario" class="selectFuncionario" name="selectFuncionario" required>
-                <option value="" selected disabled hidden>Matrícula</option> 
-                {% for matricula in matriculas %}
-                    <option value="{{matricula}}">{{matricula}}</option>
-                {% endfor %}
-            </select>
-        
-        </div> -->
-        
-        <div class="form-item">
-
-            <label for="label" style="color: white;">
-                Nome ou Matrícula (obrigatório):
-                
-                <select style="width: 300px;" id="selectFuncionarioTransferencia" class="selectFuncionarioTransferencia" name="selectFuncionarioTransferencia" required>
-
-                </select>
-                
-            </label>
-
-        </div>
-
-        <div class="form-item">
-            
-            <label for="label" style="color: white;">
-                Depósito destino (obrigatório):
-
-                <select id="selectDepositoDestino" class="selectDepositoDestino" name="selectDepositoDestino" required>
-                        <option value="" selected disabled hidden></option> 
-                        {% for deposito in deposito_destino %}
-                            <option value="{{deposito[0]}}">{{deposito[0]}}</option>
-                        {% endfor %}
-                </select>
-            
-            </label>
-
-        </div>
-
-        <div class="form-item">
-
-            <label for="label" style="color: white;">
-                Item (obrigatório):
-            
-                <select id="selectItemTransferencia" class="selectItemTransferencia" name="selectItemTransferencia" required>
-                    <option value="" selected disabled hidden></option> 
-                    {% for recurso in recursos_transferencia %}
-                        <option value="{{recurso[0]}}">{{recurso[0]}}</option>
-                    {% endfor %}
-                </select>
-            </label>
-
-        </div>
-
-        <div class="form-item">
-
-            <label style="margin-right: 30px; color: white;" for="label" style="color: white;">
-                Quantidade (obrigatório):
-                <!-- <input type="number" name="quantidade" id="quantidade" min="0.1" max="999999" required>  -->
-                <input type="number" id="quantidade_transferencia" name="quantidade_transferencia" min="0" required><br><br>
-
-            </label>
-
-        </div>
-
-        <!-- <div class="accept-box">
-            <input type="checkbox" name="accept" id="accept">
-            <p>I accept the <a href="#">Terms & Conditions</a></p>
-        </div> -->
-
-        <div class="form-btns">
-            <button class="signup" id="btn-salvar-transferencia">Confirmar</button>
-        </div>
- 
+    <!-- <div id="alertBox" class="alert alert-danger">
+        <strong>Erro!</strong> Preencha todos os campos.
     </div>
     
-    <div id="loader" style="display: none;"></div>
-    <div id="loader-overlay"></div>
+    <div id="successAlert" class="alert alert-success" role="alert">
+        Salvo!
+    </div> -->
 
     <div id="mensagem"></div>
 
-    <!-- FORMULÁRIO PARA REQUISIÇÃO -->
+    <!-- Script tela de carregamento -->
 
     <script>
+        function showLoading() {
+            $('#loading').show();
+        }
     
-        $(document).ready(function() {
-            $('#selectItem').select2({
-                theme: "classic"
-            });
-        });
-
-        $('#selectItem').on('select2:open', function (e) {
-            $('.select2-search__field').attr('placeholder', 'Digite aqui para buscar...');
-        });
-
+        function hideLoading() {
+            $('#loading').hide();
+        }
     </script>
+
+    <!-- Bootstrap core JavaScript-->
+    <script src="static/vendor/jquery/jquery.min.js"></script>
+    <script src="static/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+
+    <!-- Core plugin JavaScript-->
+    <script src="static/vendor/jquery-easing/jquery.easing.min.js"></script>
+
+    <!-- Custom scripts for all pages-->
+    <script src="static/js/sb-admin-2.min.js"></script>
+
+    <!--  DEPOIS Criar função para as listas de dropwdown  -->
+
+    <!-- Dropdown de matriculas/nomes -->
+
+    <script>
+        document.addEventListener('input', function (event) {
+            var dropdown = document.getElementById('dropdown');
+            var input = document.getElementById('dropdownInput');
+            var list = document.getElementById('dropdownList');
+
+            if (dropdown.contains(event.target)) {
+                // Clicou dentro do dropdown, mostra a lista
+                list.style.display = 'block';
+            } else {
+                // Clicou fora do dropdown, esconde a lista
+                list.style.display = 'none';
+            }
+        });
+
+        document.addEventListener('click', function (event) {
+            var dropdown = document.getElementById('dropdown');
+            var input = document.getElementById('dropdownInput');
+            var list = document.getElementById('dropdownList');
+
+            if (dropdown.contains(event.target)) {
+                // Clicou dentro do dropdown, mostra a lista
+                // list.style.display = 'block';
+            } else {
+                // Clicou fora do dropdown, esconde a lista
+                list.style.display = 'none';
+            }
+        });
+
+        document.getElementById('dropdownList').addEventListener('click', function (event) {
+            var input = document.getElementById('dropdownInput');
+            if (event.target.tagName.toLowerCase() === 'li') {
+                // Clicou em um item da lista, preenche o input com o texto do item
+                input.value = event.target.textContent;
+            }
+        });
+
+        document.getElementById('dropdownInput').addEventListener('input', function () {
+            // Filtra as opções com base no texto digitado
+            var input = this.value.toLowerCase();
+            var list = document.getElementById('dropdownList');
+            var items = list.getElementsByTagName('li');
+
+            for (var i = 0; i < items.length; i++) {
+                var itemText = items[i].textContent.toLowerCase();
+                if (itemText.indexOf(input) > -1) {
+                    items[i].style.display = 'block';
+                } else {
+                    items[i].style.display = 'none';
+                }
+            }
+        });
+    </script>
+
+    <!-- Dropdown de matriculas/nomes Transferência -->
+
+    <script>
+        document.addEventListener('input', function (event) {
+            var dropdown = document.getElementById('dropdownTransferencia');
+            var input = document.getElementById('dropdownInputTransferencia');
+            var list = document.getElementById('dropdownListTransferencia');
+
+            if (dropdown.contains(event.target)) {
+                // Clicou dentro do dropdown, mostra a lista
+                list.style.display = 'block';
+            } else {
+                // Clicou fora do dropdown, esconde a lista
+                list.style.display = 'none';
+            }
+        });
+
+        document.addEventListener('click', function (event) {
+            var dropdown = document.getElementById('dropdownTransferencia');
+            var input = document.getElementById('dropdownInputTransferencia');
+            var list = document.getElementById('dropdownListTransferencia');
+
+            if (dropdown.contains(event.target)) {
+                // Clicou dentro do dropdown, mostra a lista
+                // list.style.display = 'block';
+            } else {
+                // Clicou fora do dropdown, esconde a lista
+                list.style.display = 'none';
+            }
+        });
+
+        document.getElementById('dropdownListTransferencia').addEventListener('click', function (event) {
+            var input = document.getElementById('dropdownInputTransferencia');
+            if (event.target.tagName.toLowerCase() === 'li') {
+                // Clicou em um item da lista, preenche o input com o texto do item
+                input.value = event.target.textContent;
+            }
+        });
+
+        document.getElementById('dropdownInputTransferencia').addEventListener('input', function () {
+            // Filtra as opções com base no texto digitado
+            var input = this.value.toLowerCase();
+            var list = document.getElementById('dropdownListTransferencia');
+            var items = list.getElementsByTagName('li');
+
+            for (var i = 0; i < items.length; i++) {
+                var itemText = items[i].textContent.toLowerCase();
+                if (itemText.indexOf(input) > -1) {
+                    items[i].style.display = 'block';
+                } else {
+                    items[i].style.display = 'none';
+                }
+            }
+        });
+    </script>
+
+    <!-- Dropdown de centro de custo -->
+
+    <script>
+        document.addEventListener('click', function (event) {
+            var dropdown = document.getElementById('dropdown-ccusto');
+            var input = document.getElementById('inputCcustoDropdown');
+            var list = document.getElementById('listCcustoDropdown');
+
+            if (dropdown.contains(event.target)) {
+                // Clicou dentro do dropdown, mostra a lista
+                list.style.display = 'block';
+            } else {
+                // Clicou fora do dropdown, esconde a lista
+                list.style.display = 'none';
+            }
+        });
+
+        document.getElementById('listCcustoDropdown').addEventListener('click', function (event) {
+            var input = document.getElementById('inputCcustoDropdown');
+            if (event.target.tagName.toLowerCase() === 'li') {
+                // Clicou em um item da lista, preenche o input com o texto do item
+                input.value = event.target.textContent;
+            }
+        });
+
+        document.getElementById('inputCcustoDropdown').addEventListener('input', function () {
+            // Filtra as opções com base no texto digitado
+            var input = this.value.toLowerCase();
+            var list = document.getElementById('listCcustoDropdown');
+            var items = list.getElementsByTagName('li');
+
+            for (var i = 0; i < items.length; i++) {
+                var itemText = items[i].textContent.toLowerCase();
+                if (itemText.indexOf(input) > -1) {
+                    items[i].style.display = 'block';
+                } else {
+                    items[i].style.display = 'none';
+                }
+            }
+        });
+    </script>
+
+    <!-- Dropdown de depósito Transferência -->
+
+    <script>
+        document.addEventListener('click', function (event) {
+            var dropdown = document.getElementById('dropdownDepositoTransferencia');
+            var input = document.getElementById('inputDepositoDropdown');
+            var list = document.getElementById('listDepositoDropdown');
+
+            if (dropdown.contains(event.target)) {
+                // Clicou dentro do dropdown, mostra a lista
+                list.style.display = 'block';
+            } else {
+                // Clicou fora do dropdown, esconde a lista
+                list.style.display = 'none';
+            }
+        });
+
+        document.getElementById('listDepositoDropdown').addEventListener('click', function (event) {
+            var input = document.getElementById('inputDepositoDropdown');
+            if (event.target.tagName.toLowerCase() === 'li') {
+                // Clicou em um item da lista, preenche o input com o texto do item
+                input.value = event.target.textContent;
+            }
+        });
+
+        document.getElementById('inputDepositoDropdown').addEventListener('input', function () {
+            // Filtra as opções com base no texto digitado
+            var input = this.value.toLowerCase();
+            var list = document.getElementById('listDepositoDropdown');
+            var items = list.getElementsByTagName('li');
+
+            for (var i = 0; i < items.length; i++) {
+                var itemText = items[i].textContent.toLowerCase();
+                if (itemText.indexOf(input) > -1) {
+                    items[i].style.display = 'block';
+                } else {
+                    items[i].style.display = 'none';
+                }
+            }
+        });
+    </script>
+
+    <!-- Dropdown de Itens -->
 
     <script>
         
-        $(document).ready(function() {
-            $('#selectCcusto').select2({
-                theme: "classic"
-            });
+        document.addEventListener('click', function (event) {
+            var dropdown = document.getElementById('dropdown-item');
+            var input = document.getElementById('inputItemDropdown');
+            var list = document.getElementById('listItemDropdown');
+    
+            if (dropdown.contains(event.target) || input.contains(event.target)) {
+                // Clicou dentro do dropdown ou dentro do input, mostra a lista
+                list.style.display = 'block';
+            } else {
+                // Clicou fora do dropdown e do input, esconde a lista
+                list.style.display = 'none';
+            }
         });
+    
+        document.getElementById('listItemDropdown').addEventListener('click', function (event) {
+            var input = document.getElementById('inputItemDropdown');
+            var list = document.getElementById('listItemDropdown');
+            list.style.display = 'none';
 
-        $('#selectCcusto').on('select2:open', function (e) {
-            $('.select2-search__field').attr('placeholder', 'Digite aqui para buscar...');
+            if (event.target.tagName.toLowerCase() === 'li') {
+                // Clicou em um item da lista, preenche o input com o texto do item
+                input.value = event.target.textContent;
+                // Clicou em um item da lista, esconde a lista
+            }
+        });
+    
+        document.getElementById('inputItemDropdown').addEventListener('input', function () {
+            // Filtra as opções com base no texto digitado
+            var input = this.value.toLowerCase();
+            var list = document.getElementById('listItemDropdown');
+            var items = list.getElementsByTagName('li');
+    
+            for (var i = 0; i < items.length; i++) {
+                var itemText = items[i].textContent.toLowerCase();
+                if (itemText.indexOf(input) > -1) {
+                    items[i].style.display = 'block';
+                } else {
+                    items[i].style.display = 'none';
+                }
+            }
+    
         });
 
     </script>
 
-    <script>
-            
-        $(document).ready(function() {
-            $('#selectClasse').select2({
-                theme: "classic"
-            });
-        });
+    <!-- Dropdown de Itens Transferência -->
 
-        $('#selectClasse').on('select2:open', function (e) {
-            $('.select2-search__field').attr('placeholder', 'Digite aqui para buscar...');
+    <script>
+        
+        document.addEventListener('click', function (event) {
+            var dropdown = document.getElementById('dropdownItemTransferencia');
+            var input = document.getElementById('inputItemTransferenciaDropdown');
+            var list = document.getElementById('listItemTransferenciaDropdown');
+    
+            if (dropdown.contains(event.target) || input.contains(event.target)) {
+                // Clicou dentro do dropdown ou dentro do input, mostra a lista
+                list.style.display = 'block';
+            } else {
+                // Clicou fora do dropdown e do input, esconde a lista
+                list.style.display = 'none';
+            }
+        });
+    
+        document.getElementById('listItemTransferenciaDropdown').addEventListener('click', function (event) {
+            var input = document.getElementById('inputItemTransferenciaDropdown');
+            var list = document.getElementById('listItemTransferenciaDropdown');
+            list.style.display = 'none';
+
+            if (event.target.tagName.toLowerCase() === 'li') {
+                // Clicou em um item da lista, preenche o input com o texto do item
+                input.value = event.target.textContent;
+                // Clicou em um item da lista, esconde a lista
+            }
+        });
+    
+        document.getElementById('inputItemTransferenciaDropdown').addEventListener('input', function () {
+            // Filtra as opções com base no texto digitado
+            var input = this.value.toLowerCase();
+            var list = document.getElementById('listItemTransferenciaDropdown');
+            var items = list.getElementsByTagName('li');
+    
+            for (var i = 0; i < items.length; i++) {
+                var itemText = items[i].textContent.toLowerCase();
+                if (itemText.indexOf(input) > -1) {
+                    items[i].style.display = 'block';
+                } else {
+                    items[i].style.display = 'none';
+                }
+            }
+    
         });
 
     </script>
 
+    <!-- Dropdown de classes -->
+
     <script>
-                
-        $(document).ready(function() {
-            $('#selectItem').select2({
-                theme: "classic"
-            });
+        document.addEventListener('click', function (event) {
+            var dropdown = document.getElementById('dropdown-classe');
+            var input = document.getElementById('inputClasseDropdown');
+            var list = document.getElementById('listClasseDropdown');
+
+            if (dropdown.contains(event.target)) {
+                // Clicou dentro do dropdown, mostra a lista
+                list.style.display = 'block';
+            } else {
+                // Clicou fora do dropdown, esconde a lista
+                list.style.display = 'none';
+            }
         });
 
-        $('#selectItem').on('select2:open', function (e) {
-            $('.select2-search__field').attr('placeholder', 'Digite aqui para buscar...');
+        document.getElementById('listClasseDropdown').addEventListener('click', function (event) {
+            var input = document.getElementById('inputClasseDropdown');
+            if (event.target.tagName.toLowerCase() === 'li') {
+                // Clicou em um item da lista, preenche o input com o texto do item
+                input.value = event.target.textContent;
+            }
         });
 
+        document.getElementById('inputClasseDropdown').addEventListener('input', function () {
+            // Filtra as opções com base no texto digitado
+            var input = this.value.toLowerCase();
+            var list = document.getElementById('listClasseDropdown');
+            var items = list.getElementsByTagName('li');
+
+            for (var i = 0; i < items.length; i++) {
+                var itemText = items[i].textContent.toLowerCase();
+                if (itemText.indexOf(input) > -1) {
+                    items[i].style.display = 'block';
+                } else {
+                    items[i].style.display = 'none';
+                }
+            }
+        });
     </script>
 
-    <!-- <script>
-        document.addEventListener('DOMContentLoaded', function () {
-            // Adiciona um ouvinte de evento ao selectCcusto
-            $('#selectCcusto').on('select2:select', function (e) {
-                // Exibe o loader
-                document.getElementById('loader').style.display = 'block';
-                document.getElementById('loader-overlay').style.display = 'block';
-
-                // Obtém o valor selecionado do centro de custo
-                var ccustoSelecionado = e.params.data.id;
-                console.log('Centro de Custo Selecionado:', ccustoSelecionado);
-
-                // Faz a solicitação AJAX para obter os itens com base no centro de custo selecionado
-                fetch('/itens_por_ccusto?ccusto=' + ccustoSelecionado)
-                    .then(response => {
-                        if (!response.ok) {
-                            throw new Error('Erro na solicitação AJAX: ' + response.status);
-                        }
-                        return response.json();
-                    })
-                    .then(data => {
-                        // Limpa as opções atuais do selectItem
-                        var selectItem = document.getElementById('selectItem');
-                        selectItem.innerHTML = '<option value="" selected disabled hidden></option>';
-
-                        // Adiciona as novas opções ao selectItem com base na resposta JSON
-                        data.forEach(function (item) {
-                            var option = document.createElement('option');
-                            option.value = item[0];
-                            option.textContent = item[0];
-                            selectItem.appendChild(option);
-                        });
-
-                        // Oculta o loader após o sucesso
-                        document.getElementById('loader').style.display = 'none';
-                        document.getElementById('loader-overlay').style.display = 'none';
-
-                    })
-                    .catch(error => {
-                        console.error(error);
-                        // Mesmo em caso de erro, certifique-se de ocultar o loader
-                        document.getElementById('loader').style.display = 'none';
-                        document.getElementById('loader-overlay').style.display = 'none';
-
-                    });
-            });
-        });
-
-    </script>     -->
+    <!-- Radio para alternar entre os formulários -->
 
     <script>
-        document.addEventListener('DOMContentLoaded', function () {
-            // Adiciona um ouvinte de evento ao selectCcusto
-            $('#selectItem').on('select2:select', function (e) {
-                // Exibe o loader
-                document.getElementById('loader').style.display = 'block';
-                document.getElementById('loader-overlay').style.display = 'block';
 
-                // Obtém o valor selecionado do centro de custo
-                var itemSelecionado = e.params.data.id;
-
-                // Faz a solicitação AJAX para obter os itens com base no centro de custo selecionado
-                fetch('/classe_por_item?item=' + itemSelecionado)
-                    .then(response => {
-                        if (!response.ok) {
-                            throw new Error('Erro na solicitação AJAX: ' + response.status);
-                        }
-                        return response.json();
-                    })
-                    .then(data => {
-                        // Limpa as opções atuais do selectClasse
-                        var selectClasse = document.getElementById('selectClasse');
-                        selectClasse.innerHTML = '<option value="" selected disabled hidden></option>';
-
-                        // Adiciona as novas opções ao selectClasse com base na resposta JSON
-                        data.forEach(function (item) {
-                            var option = document.createElement('option');
-                            option.value = item[0];
-                            option.textContent = item[0];
-                            selectClasse.appendChild(option);
-                        });
-
-                        // Oculta o loader após o sucesso
-                        document.getElementById('loader').style.display = 'none';
-                        document.getElementById('loader-overlay').style.display = 'none';
-
-                    })
-                    .catch(error => {
-                        console.error(error);
-                        // Mesmo em caso de erro, certifique-se de ocultar o loader
-                        document.getElementById('loader').style.display = 'none';
-                        document.getElementById('loader-overlay').style.display = 'none';
-
-                    });
-            });
+        $(document).ready(function() {
+            if (document.getElementById('option1').checked) {
+                document.getElementById('tituloFormulario').textContent = 'Formulário para Requisição';
+            };
         });
 
-    </script>  
+        // Adicione um ouvinte de mudança ao grupo de opções de rádio
+        document.querySelectorAll('input[name="options"]').forEach(function(radio) {
+            radio.addEventListener('change', function() {
+                // Verifique qual opção de rádio está selecionada
+                if (document.getElementById('option1').checked) {
+                    // Se a opção 1 estiver selecionada, exiba o formulário de Requisições e oculte o de Transferência
+                    document.getElementById('formRequisicoes').style.display = 'block';
+                    document.getElementById('btn-salvar-requisicao').style.display = 'block';
 
-    <script>
-        $(document).ready(function () {
-            $('#selectFuncionario').select2({
-                ajax: {
-                    url: '/sugestoes_funcionarios',
-                    dataType: 'json',
-                    delay: 1000,
-                    processResults: function (data) {
-                        return {
-                            results: data.results
-                        };
-                    },
-                    cache: true
+                    document.getElementById('formTransferencia').style.display = 'none';
+                    document.getElementById('btn-salvar-transferencia').style.display = 'none';
+
+                    document.getElementById('tituloFormulario').textContent = 'Formulário para Requisição';
+                } else {
+                    // Se a opção 2 estiver selecionada, exiba o formulário de Transferência e oculte o de Requisições
+                    document.getElementById('formRequisicoes').style.display = 'none';
+                    document.getElementById('btn-salvar-requisicao').style.display = 'none';
+
+                    document.getElementById('formTransferencia').style.display = 'block';
+                    document.getElementById('btn-salvar-transferencia').style.display = 'block';
+
+                    document.getElementById('tituloFormularioTranferencia').textContent = 'Formulário para Transferência';
                 }
             });
+        });
+    </script>
 
-            // Adiciona um placeholder ao input do Select2
-            $('#selectFuncionario').on('select2:open', function (e) {
-                $('.select2-search__field').attr('placeholder', 'Digite aqui para buscar...');
+    <!-- Buscando classe por item -->
+
+    <script>
+        // Aguarde que o DOM esteja completamente carregado
+        document.addEventListener('DOMContentLoaded', function () {
+            // Obtém o elemento de entrada e adiciona um ouvinte de evento 'input'
+            var inputItemDropdown = document.getElementById('listItemDropdown');
+            var input = document.getElementById('inputClasseDropdown');
+    
+            inputItemDropdown.addEventListener('click', function (event) {
+                showLoading();
+                // Obtém o valor inserido no campo de entrada
+                var itemSelecionado = event.target.textContent.trim();
+                
+                // Faz a solicitação AJAX apenas se o valor não estiver vazio
+                if (itemSelecionado !== '') {
+                    // Faz a solicitação AJAX para obter os itens com base no centro de custo selecionado
+                    fetch('/classe_por_item?item=' + itemSelecionado)
+                        .then(response => {
+                            if (!response.ok) {
+                                throw new Error('Erro na solicitação AJAX: ' + response.status);
+                            }
+                            return response.json();
+                        })
+                        .then(data => {
+                            // Limpa as opções atuais do selectClasse
+                            var selectClasse = document.getElementById('listClasseDropdown');
+                            selectClasse.innerHTML = '<li></li>';
+                            
+                            // Adiciona as novas opções ao selectClasse com base na resposta JSON
+                            data.forEach(function (item) {
+                                var option = document.createElement('li');
+                                option.value = item[0];
+                                option.textContent = item[0];
+                                selectClasse.appendChild(option);
+                            });
+    
+                            if (data.length === 1) {
+                                input.value = data[0][0]; // Assumindo que o valor desejado está no primeiro elemento do array.
+                            }
+                            
+                            hideLoading();
+                        })
+                        .catch(error => {
+                            console.error(error);
+                            hideLoading();
+                        });
+                } else {
+                    hideLoading();
+                }
             });
         });
     </script>
+    
+    <!-- Buscando unidade por item -->
+
+    <script>
+        // Aguarde que o DOM esteja completamente carregado
+        document.addEventListener('DOMContentLoaded', function () {
+            // Obtém o elemento de entrada e adiciona um ouvinte de evento 'input'
+            var inputItemDropdown = document.getElementById('listItemDropdown');
+
+            inputItemDropdown.addEventListener('click', function (event) {
+                showLoading();
+                // Obtém o valor inserido no campo de entrada
+                var itemSelecionado = event.target.textContent.trim();
+                
+                // Faz a solicitação AJAX apenas se o valor não estiver vazio
+                if (itemSelecionado !== '') {
+                    // Faz a solicitação AJAX para obter os itens com base no centro de custo selecionado
+                    fetch('/unidade_por_item?item=' + itemSelecionado)
+                        .then(response => {
+                            if (!response.ok) {
+                                throw new Error('Erro na solicitação AJAX: ' + response.status);
+                            }
+                            return response.json();
+                        })
+                        .then(data => {
+                            // Limpa as opções atuais do selectClasse
+                            if (data.length === 1) {
+                                document.getElementById('quantidade_unidade').innerHTML = '<strong>Unidade: </strong>' + data;
+                            }
+                            else {
+                                document.getElementById('quantidade_unidade').innerHTML = '<strong>Unidade: </strong>';
+                            }
+                            
+                            hideLoading();
+                        })
+                        .catch(error => {
+                            console.error(error);
+                            hideLoading();
+                        });
+                } else {
+                    hideLoading();
+                }
+            });
+        });
+    </script>
+
+    <!-- Enviar dados requisição -->
 
     <script>
         // Função para enviar os dados ao backend
         function salvarRequisicao() {
+
+            showLoading();
+
             // Obtém os valores dos campos
             // Exibe o loader
-            document.getElementById('loader').style.display = 'block';
-            document.getElementById('loader-overlay').style.display = 'block';
+            var inputFuncionario = $('#dropdownInput').val();
+            var inputItem = $('#inputItemDropdown').val();
+            var inputCcusto = $('#inputCcustoDropdown').val();
+            var inputClasse = $('#inputClasseDropdown').val();
+            var inputQuantidade = $('#quantidade').val();
+            var textAreaObservacao = $('#observacao').val();
 
-            try {
-                var selectFuncionario = $('#selectFuncionario').select2('data')[0].text;
-                // Se não houver exceção, o código continua aqui
-            } catch (error) {
-                // Se ocorrer uma exceção, o código dentro deste bloco será executado
-                exibirMensagem('aviso','Por favor, preencha todos os campos obrigatórios')
-                document.getElementById('loader').style.display = 'none';
-                document.getElementById('loader-overlay').style.display = 'none';
-                return;
-            }          
-            
-            var selectItem = $('#selectItem').val();
-            var selectCcusto = $('#selectCcusto').val();
-            var selectClasse = $('#selectClasse').val();
-            var quantidade = $('#quantidade').val();
-            var observacao = $('#texto_observacao').val();
+            console.log(inputFuncionario,inputItem,inputCcusto,inputClasse,inputQuantidade);
 
             // Verifica se algum campo está vazio
-            if (!selectFuncionario || !selectItem || !selectCcusto || !selectClasse || !quantidade) {
+            if (!inputFuncionario || !inputItem || !inputCcusto || !inputClasse || !inputQuantidade) {
                 exibirMensagem('aviso', 'Por favor, preencha todos os campos obrigatórios');
-
-                document.getElementById('loader').style.display = 'none';
-                document.getElementById('loader-overlay').style.display = 'none';
-                return;  // Não faz a requisição se algum campo estiver vazio
+                hideLoading();
+                return;
             }
+            
+            //     document.getElementById('loader').style.display = 'none';
+            //     document.getElementById('loader-overlay').style.display = 'none';
+            //     return;  // Não faz a requisição se algum campo estiver vazio
+            // }
 
-            // Substitua 'URL_BACKEND' pela URL real do seu servidor
-            var urlBackend = '/salvar-requisicao';
+            // // Substitua 'URL_BACKEND' pela URL real do seu servidor
+            // var urlBackend = '/salvar-requisicao';
 
             // Monta o objeto de dados
             var dados = {
-                selectFuncionario: selectFuncionario,
-                selectItem: selectItem,
-                selectCcusto: selectCcusto,
-                selectClasse: selectClasse,
-                quantidade: quantidade,
-                observacao: observacao
+                inputFuncionario: inputFuncionario,
+                inputItem: inputItem,
+                inputCcusto: inputCcusto,
+                inputClasse: inputClasse,
+                inputQuantidade: inputQuantidade,
+                textAreaObservacao: textAreaObservacao
             };
 
             // Faz uma requisição AJAX para enviar os dados ao backend
             $.ajax({
                 type: 'POST',
-                url: urlBackend,
+                url: '/salvar-requisicao',
                 data: dados,
                 success: function (data) {
                     exibirMensagem('sucesso', 'Dados enviados com sucesso');
                     // Adapte conforme necessário
-                    $('#selectItem').val(null).trigger('change');
-                    $('#selectClasse').val(null).trigger('change');
-                    $('#quantidade').val('');
-                    $('#texto_observacao').val('');
+                    document.getElementById('inputItemDropdown').value = '';
+                    document.getElementById('inputClasseDropdown').value = '';
+                    document.getElementById('quantidade').value = '';
+                    document.getElementById('observacao').value = '';
+                    hideLoading();
                     
-                    document.getElementById('loader').style.display = 'none';
-                    document.getElementById('loader-overlay').style.display = 'none';
                 },
                 error: function (error) {
                     console.error('Erro ao enviar os dados:', error);
-                    document.getElementById('loader').style.display = 'none';
-                    document.getElementById('loader-overlay').style.display = 'none';
-
-                    // Adapte conforme necessário
+                    hideLoading();
                 }
             });
         }
@@ -494,152 +798,77 @@
 
     </script>
 
-    <!-- FORMULÁRIO PARA TRANSFERÊNCIA -->
-
-    <script>
-        $(document).ready(function () {
-            $('#selectFuncionarioTransferencia').select2({
-                ajax: {
-                    url: '/sugestoes_funcionarios',
-                    dataType: 'json',
-                    delay: 1000,
-                    processResults: function (data) {
-                        return {
-                            results: data.results
-                        };
-                    },
-                    cache: true
-                }
-            });
-
-            // Adiciona um placeholder ao input do Select2
-            $('#selectFuncionarioTransferencia').on('select2:open', function (e) {
-                $('.select2-search__field').attr('placeholder', 'Digite aqui para buscar...');
-            });
-        });
-    </script>
-
-    <script>
-    
-        $(document).ready(function() {
-            $('#selectItemTransferencia').select2({
-                theme: "classic"
-            });
-        });
-
-        $('#selectItem').on('select2:open', function (e) {
-            $('.select2-search__field').attr('placeholder', 'Digite aqui para buscar...');
-        });
-
-    </script>
-
-    <script>
-        
-        $(document).ready(function() {
-            $('#selectDepositoDestino').select2({
-                theme: "classic"
-            });
-        });
-
-        $('#selectItem').on('select2:open', function (e) {
-            $('.select2-search__field').attr('placeholder', 'Digite aqui para buscar...');
-        });
-
-    </script>
+    <!-- Enviar dados Transferência -->
 
     <script>
         // Função para enviar os dados ao backend
         function salvarTransferencia() {
-            
-            document.getElementById('loader').style.display = 'block';
-            document.getElementById('loader-overlay').style.display = 'block';
+            // Obtém os valores dos campos
+            // Exibe o loader
+            showLoading();
+            var inputFuncionario = $('#dropdownInputTransferencia').val();
+            var inputDeposito = $('#inputDepositoDropdown').val();
+            var inputItem = $('#inputItemTransferenciaDropdown').val();
+            var inputQuantidade = $('#quantidadeTransferencia').val();
 
-            // Substitua 'URL_BACKEND' pela URL real do seu servidor
-            var urlBackend = '/salvar-transferencia';
-
-            try {
-                var selectFuncionarioTransferencia = $('#selectFuncionarioTransferencia').select2('data')[0].text;
-                // Se não houver exceção, o código continua aqui
-            } catch (error) {
-                // Se ocorrer uma exceção, o código dentro deste bloco será executado
-                exibirMensagem('aviso','Por favor, preencha todos os campos obrigatórios')
-                document.getElementById('loader').style.display = 'none';
-                document.getElementById('loader-overlay').style.display = 'none';
-                return;
-            }  
-
-            var selectItemTransferencia = $('#selectItemTransferencia').val();
-            var selectDepositoDestino = $('#selectDepositoDestino').val();
-            var quantidade_transferencia = $('#quantidade_transferencia').val();
+            console.log(inputFuncionario)
 
             // Verifica se algum campo está vazio
-            if (!selectFuncionarioTransferencia || !selectItemTransferencia || !selectDepositoDestino || !quantidade_transferencia) {
+            if (!inputFuncionario || !inputItem || !inputDeposito | !inputQuantidade) {
                 exibirMensagem('aviso', 'Por favor, preencha todos os campos obrigatórios');
-                document.getElementById('loader').style.display = 'none';
-                document.getElementById('loader-overlay').style.display = 'none';
-                return;  // Não faz a requisição se algum campo estiver vazio
+                hideLoading();
+                return;
+            } else {
+                
             }
+            
+            //     document.getElementById('loader').style.display = 'none';
+            //     document.getElementById('loader-overlay').style.display = 'none';
+            //     return;  // Não faz a requisição se algum campo estiver vazio
+            // }
+
+            // // Substitua 'URL_BACKEND' pela URL real do seu servidor
+            // var urlBackend = '/salvar-requisicao';
 
             // Monta o objeto de dados
             var dados = {
-                selectFuncionarioTransferencia: selectFuncionarioTransferencia,
-                selectItemTransferencia: selectItemTransferencia,
-                selectDepositoDestino: selectDepositoDestino,
-                quantidade: quantidade_transferencia,
+                inputFuncionario: inputFuncionario,
+                inputItem: inputItem,
+                inputDeposito: inputDeposito,
+                inputQuantidade: inputQuantidade,
             };
 
             // Faz uma requisição AJAX para enviar os dados ao backend
             $.ajax({
                 type: 'POST',
-                url: urlBackend,
+                url: '/salvar-transferencia',
                 data: dados,
                 success: function (data) {
                     exibirMensagem('sucesso', 'Dados enviados com sucesso');
                     // Adapte conforme necessário
-
-                    // Limpa ou reseta os campos específicos
-                    $('#selectItemTransferencia').val(null).trigger('change');
-                    $('#quantidade_transferencia').val('');
-
-                    document.getElementById('loader').style.display = 'none';
-                    document.getElementById('loader-overlay').style.display = 'none';
+                    document.getElementById('inputItemTransferenciaDropdown').value = '';
+                    document.getElementById('inputDepositoDropdown').value = '';
+                    document.getElementById('quantidadeTransferencia').value = '';
+                    hideLoading();
                 },
                 error: function (error) {
                     console.error('Erro ao enviar os dados:', error);
+                    hideLoading();
                     // Adapte conforme necessário
-                    document.getElementById('loader').style.display = 'none';
-                    document.getElementById('loader-overlay').style.display = 'none';
                 }
             });
         }
 
         // Adiciona um ouvinte para o evento de clique no botão
         $('#btn-salvar-transferencia').on('click', function () {
+            // Desativa o botão após o clique            
             // Chama a função para enviar os dados ao backend
             salvarTransferencia();
         });
+
     </script>
 
-    <!-- BOTÕES PARA ALTERNAR O FORMULÁRIO -->
-
-    <script>
-        function mostrarFormulario(idFormulario) {
-            // Oculta todos os formulários
-            var formularios = document.querySelectorAll('.container');
-            formularios.forEach(function(formulario) {
-                formulario.classList.remove('active');
-            });
-
-            // Mostra o formulário específico
-            var formularioAtual = document.getElementById(idFormulario);
-            formularioAtual.classList.add('active');
-        }
-
-        // Por padrão, mostrar o formulário de requisição
-        mostrarFormulario('formulario_requisicao');
-    </script>
-
-    <!-- MENSAGEM -->
+    <!-- Exibir mensagem -->
 
     <script>
         function exibirMensagem(tipo, texto) {
@@ -664,20 +893,6 @@
         }
     </script>
 
-    <script>
-        // Inicialize o Select2
-        $('#selectItem').select2();
-
-        // Captura o evento de mudança no selectItem
-        $('#selectItem').on('change', function() {
-            // Obtém o valor selecionado
-            var selectedValue = $(this).val();
-            // Obtém o atributo 'data-unidade' do item selecionado
-            var selectedUnidade = $(this).find(':selected').data('unidade');
-            // Encontra o elemento com id unidadeLabel e define seu conteúdo
-            $('#unidadeLabel').text(selectedValue ? "Unidade - " + selectedUnidade : "");
-        });
-    </script>
 
 </body>
 
