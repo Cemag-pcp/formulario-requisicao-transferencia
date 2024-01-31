@@ -107,10 +107,11 @@
                                         <label>Classe da requisição</label>
                                     </div>
                                     <ul class="dropdown-list" id="listClasseDropdown">
-                                        <li></li>
+                                        <li>Req p Consumo</li>
+                                        <li>Req p Produção</li>
                                     </ul>
                                 </div>
-                                <small id="inputClasseDropdown" class="form-text text-muted"><strong>Obrigatório</strong></small>
+                                <small id="HelpTextClasseDropdown" class="form-text text-muted"><strong>Obrigatório</strong></small>
                             </div>
                         </div>
                         <div class="form row">
@@ -674,7 +675,14 @@
                             // Limpa as opções atuais do selectClasse
                             var selectClasse = document.getElementById('listClasseDropdown');
                             selectClasse.innerHTML = '<li></li>';
-                            
+                                
+                            if (data.length === 1) {
+                                input.value = data[0][0]; // Assumindo que o valor desejado está no primeiro elemento do array.
+                            } else if (data.length === 0) {
+                                data.push('Req p Produção','Req p Consumo');
+                                console.log(data);
+                            }
+
                             // Adiciona as novas opções ao selectClasse com base na resposta JSON
                             data.forEach(function (item) {
                                 var option = document.createElement('li');
@@ -682,10 +690,6 @@
                                 option.textContent = item[0];
                                 selectClasse.appendChild(option);
                             });
-    
-                            if (data.length === 1) {
-                                input.value = data[0][0]; // Assumindo que o valor desejado está no primeiro elemento do array.
-                            }
                             
                             hideLoading();
                         })
